@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, useInView }           from 'framer-motion'
 import gsap                            from 'gsap'
 import { ScrollTrigger }               from 'gsap/ScrollTrigger'
+import { useLowPerformanceMode }       from '@/shared/lib/useLowPerformanceMode'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -42,7 +43,7 @@ function Counter({
   return <span ref={ref}>{val.toFixed(decimals)}{suffix}</span>
 }
 
-function CapsuleDiagram() {
+function CapsuleDiagram({ lowPerformanceMode }: { lowPerformanceMode: boolean }) {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref as React.RefObject<Element>, { once: true })
 
@@ -143,8 +144,8 @@ function CapsuleDiagram() {
 
         {[0, 1, 2].map(i => (
           <motion.circle key={`p-${i}`} cx={150} cy={60} r={4} fill="#DCEFE6"
-            animate={inView ? { cy: [60, 80, 82], opacity: [0, 1, 0] } : {}}
-            transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.75, ease: 'easeIn' }}
+            animate={inView ? (lowPerformanceMode ? { cy: 82, opacity: 0.55 } : { cy: [60, 80, 82], opacity: [0, 1, 0] }) : {}}
+            transition={lowPerformanceMode ? { duration: 0.4, delay: i * 0.05 } : { duration: 2.2, repeat: Infinity, delay: i * 0.75, ease: 'easeIn' }}
           />
         ))}
       </svg>
@@ -155,9 +156,10 @@ function CapsuleDiagram() {
 export default function Science() {
   const sectionRef = useRef<HTMLElement>(null)
   const inView     = useInView(sectionRef, { once: true, margin: '-80px' })
+  const lowPerformanceMode = useLowPerformanceMode()
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined' || lowPerformanceMode) return
     const ctx = gsap.context(() => {
       gsap.fromTo(
         '.science-reveal',
@@ -169,7 +171,7 @@ export default function Science() {
       )
     })
     return () => ctx.revert()
-  }, [])
+  }, [lowPerformanceMode])
 
   const STATS = [
     { to: 4.6, suffix: 'x', label: 'Increase in healthy bacteria', from: 1, decimals: 1 },
@@ -256,7 +258,7 @@ export default function Science() {
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-72 h-72 rounded-full bg-sage/6 blur-3xl" />
             </div>
-            <CapsuleDiagram />
+            <CapsuleDiagram lowPerformanceMode={lowPerformanceMode} />
           </motion.div>
 
         </div>

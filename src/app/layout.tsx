@@ -1,22 +1,23 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Plus_Jakarta_Sans } from 'next/font/google'
+import { LangProvider } from '@/shared/lib/i18n'
 import './globals.css'
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-inter',
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-jakarta',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Numa Nutrition — Microbiome Health',
+  title: 'NUMA Nutrition — Витамины и добавки',
   description:
-    'Premium supplements backed by science. Transform your gut health with Numa Nutrition\'s precision synbiotic formulas.',
-  keywords: 'probiotics, prebiotics, synbiotic, gut health, microbiome, nutrition supplements',
+    'Премиальные витамины и биодобавки для взрослых. Каталог продуктов NUMA Nutrition с научно обоснованными формулами. Доставка по Узбекистану.',
+  keywords: 'витамины, добавки, пробиотики, NUMA Nutrition, здоровье, Узбекистан, витамин D, Omega-3',
   openGraph: {
-    title: 'Numa Nutrition — Microbiome Health',
-    description: 'Premium supplements backed by science.',
+    title: 'NUMA Nutrition — Витамины и добавки',
+    description: 'Премиальные витамины и биодобавки. Доставка по Узбекистану.',
     type: 'website',
   },
 }
@@ -25,9 +26,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="ru" className={jakarta.variable}>
       <body>
-        {children}
+        <LangProvider>
+          {children}
+        </LangProvider>
       </body>
     </html>
   )

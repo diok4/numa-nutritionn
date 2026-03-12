@@ -4,12 +4,13 @@ import { useRef, useEffect }                          from 'react'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import gsap                                           from 'gsap'
 import { ScrollTrigger }                              from 'gsap/ScrollTrigger'
+import { useLowPerformanceMode }                      from '@/shared/lib/useLowPerformanceMode'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-function HumanSilhouette() {
+function HumanSilhouette({ lowPerformanceMode }: { lowPerformanceMode: boolean }) {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref as React.RefObject<Element>, { once: true })
 
@@ -28,13 +29,13 @@ function HumanSilhouette() {
     <div ref={ref} className="relative flex items-center justify-center h-full">
 
       <motion.div
-        animate={{ scale: [1, 1.06, 1], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 3.5, repeat: Infinity }}
+        animate={lowPerformanceMode ? undefined : { scale: [1, 1.06, 1], opacity: [0.2, 0.4, 0.2] }}
+        transition={lowPerformanceMode ? undefined : { duration: 3.5, repeat: Infinity }}
         className="absolute w-80 h-80 rounded-full bg-moss/20 blur-3xl"
       />
       <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.3, 0.15] }}
-        transition={{ duration: 4.5, repeat: Infinity, delay: 0.8 }}
+        animate={lowPerformanceMode ? undefined : { scale: [1, 1.1, 1], opacity: [0.15, 0.3, 0.15] }}
+        transition={lowPerformanceMode ? undefined : { duration: 4.5, repeat: Infinity, delay: 0.8 }}
         className="absolute w-52 h-52 rounded-full bg-sage/15 blur-2xl"
       />
 
@@ -76,25 +77,25 @@ function HumanSilhouette() {
         ))}
 
         <motion.ellipse cx="100" cy="162" rx="34" ry="40" fill="#DCEFE6"
-          animate={inView ? { opacity: [0, 0.55, 0.25, 0.55] } : { opacity: 0 }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          animate={inView ? (lowPerformanceMode ? { opacity: 0.45 } : { opacity: [0, 0.55, 0.25, 0.55] }) : { opacity: 0 }}
+          transition={lowPerformanceMode ? { duration: 0.6 } : { duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
         />
 
         {BACTERIA_DOTS.map(([cx, cy], i) => (
           <motion.circle key={i} cx={cx} cy={cy} r={3 + (i % 3)}
             fill="#0F3D2E"
             animate={inView
-              ? { opacity: [0.35, 0.9, 0.35], scale: [1, 1.35, 1] }
+              ? (lowPerformanceMode ? { opacity: 0.65, scale: 1 } : { opacity: [0.35, 0.9, 0.35], scale: [1, 1.35, 1] })
               : { opacity: 0 }}
-            transition={{ duration: 2 + (i % 3) * 0.6, repeat: Infinity, delay: i * 0.18 }}
+            transition={lowPerformanceMode ? { duration: 0.45, delay: i * 0.05 } : { duration: 2 + (i % 3) * 0.6, repeat: Infinity, delay: i * 0.18 }}
             style={{ transformOrigin: `${cx}px ${cy}px` }}
           />
         ))}
 
         <motion.line x1="100" y1="130" x2="100" y2="50"
           stroke="#DCEFE6" strokeWidth="1" strokeDasharray="5 4" opacity="0.4"
-          animate={{ strokeDashoffset: [0, -50] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: 'linear' }}
+          animate={lowPerformanceMode ? undefined : { strokeDashoffset: [0, -50] }}
+          transition={lowPerformanceMode ? undefined : { duration: 2.2, repeat: Infinity, ease: 'linear' }}
         />
       </svg>
 
@@ -135,11 +136,12 @@ const FACTS = [
 export default function Education() {
   const sectionRef          = useRef<HTMLElement>(null)
   const isInView            = useInView(sectionRef, { once: true, margin: '-80px' })
+  const lowPerformanceMode  = useLowPerformanceMode()
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
-  const y                   = useTransform(scrollYProgress, [0, 1], [40, -40])
+  const y                   = useTransform(scrollYProgress, [0, 1], lowPerformanceMode ? [0, 0] : [40, -40])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined' || lowPerformanceMode) return
     const ctx = gsap.context(() => {
       gsap.fromTo(
         '.fact-card',
@@ -151,7 +153,7 @@ export default function Education() {
       )
     })
     return () => ctx.revert()
-  }, [])
+  }, [lowPerformanceMode])
 
   return (
     <section id="education" ref={sectionRef} className="py-24 lg:py-36 bg-cream overflow-hidden">
@@ -224,8 +226,8 @@ export default function Education() {
           </div>
 
           {/* Right — silhouette */}
-          <motion.div style={{ y }} className="h-[520px] relative">
-            <HumanSilhouette />
+          <motion.div style={lowPerformanceMode ? undefined : { y }} className="h-[520px] relative">
+            <HumanSilhouette lowPerformanceMode={lowPerformanceMode} />
           </motion.div>
         </div>
 

@@ -3,6 +3,8 @@
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import dynamic    from 'next/dynamic'
+import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
+import { useLang } from '@/shared/lib/i18n'
 
 const CapsuleScene = dynamic(() => import('./CapsuleScene'), {
   ssr: false,
@@ -23,29 +25,31 @@ const fadeUp = {
 }
 
 const STATS = [
-  { value: '50B',  label: 'AFU per dose'              },
-  { value: '24',   label: 'Clinically studied strains' },
-  { value: '4.6×', label: 'Healthy bacteria increase'  },
+  { value: '50B',  labelKey: 'AFU per dose'              },
+  { value: '24',   labelKey: 'Clinically studied strains' },
+  { value: '4.6×', labelKey: 'Healthy bacteria increase'  },
 ]
 
 const BADGES = ['Vegan', 'Gluten Free', 'Non-GMO', 'Clinically Tested']
 
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null)
+  const lowPerformanceMode = useLowPerformanceMode()
+  const { t } = useLang()
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-cream"
     >
-      {/* Background blobs */}
+      {/* Background blobs — NUMA green */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4  right-0  w-[480px] h-[480px] bg-sage/25 rounded-full blur-[80px]" />
-        <div className="absolute bottom-1/4 left-0  w-[380px] h-[380px] bg-moss/10 rounded-full blur-[70px]" />
-        <div className="absolute top-1/2  left-1/3 w-[280px] h-[280px] bg-sage/15 rounded-full blur-[60px]" />
+        <div className="absolute top-1/4  right-0  w-[480px] h-[480px] bg-moss/10 rounded-full blur-[80px]" />
+        <div className="absolute bottom-1/4 left-0  w-[380px] h-[380px] bg-moss/8  rounded-full blur-[70px]" />
+        <div className="absolute top-1/2  left-1/3 w-[280px] h-[280px] bg-sage/20  rounded-full blur-[60px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-6 items-center">
 
           {/* LEFT */}
@@ -53,43 +57,41 @@ export default function Hero() {
 
             <motion.div
               custom={0} initial="hidden" animate="visible" variants={fadeUp}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sage border border-moss/20"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-moss/12 border border-moss/25"
             >
               <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />
               <span className="text-xs font-semibold text-moss uppercase tracking-widest">
-                Science-Backed Formula
+                {t('hero.badge')}
               </span>
             </motion.div>
 
             <motion.h1
               custom={1} initial="hidden" animate="visible" variants={fadeUp}
-              className="text-5xl sm:text-6xl lg:text-[4.5rem] font-black text-forest leading-[1.04] tracking-tight"
+              className="text-5xl sm:text-6xl lg:text-[4.5rem] font-extrabold text-forest leading-[1.04] tracking-tight"
             >
-              A healthy gut
+              {t('hero.title1')}
               <br />
-              <span className="text-moss">can change</span>
+              <span className="text-moss">{t('hero.title2')}</span>
               <br />
-              your life.
+              {t('hero.title3')}
             </motion.h1>
 
             <motion.p
               custom={2} initial="hidden" animate="visible" variants={fadeUp}
               className="text-lg text-forest/60 leading-relaxed max-w-[26rem]"
             >
-              Your microbiome is the foundation of your health. Our precision
-              synbiotic formula delivers 50B AFU of clinically-studied probiotic
-              strains — right where it counts.
+              {t('hero.desc')}
             </motion.p>
 
             <motion.div
               custom={3} initial="hidden" animate="visible" variants={fadeUp}
               className="flex items-center gap-10"
             >
-              {STATS.map(({ value, label }) => (
-                <div key={label} className="flex flex-col items-center">
-                  <span className="text-2xl font-black text-forest">{value}</span>
+              {STATS.map(({ value, labelKey }) => (
+                <div key={labelKey} className="flex flex-col items-center">
+                  <span className="text-2xl font-extrabold text-forest">{value}</span>
                   <span className="text-[0.68rem] text-forest/50 mt-0.5 text-center leading-snug max-w-[6rem]">
-                    {label}
+                    {labelKey}
                   </span>
                 </div>
               ))}
@@ -103,11 +105,11 @@ export default function Hero() {
                 onClick={() =>
                   document.querySelector('#products')?.scrollIntoView({ behavior: 'smooth' })
                 }
-                className="group flex items-center gap-2 px-8 py-4 bg-forest text-sage rounded-full
-                           font-bold text-[0.95rem] hover:bg-moss transition-all duration-300
-                           hover:scale-105 hover:shadow-2xl hover:shadow-forest/30 active:scale-95"
+                className="group flex items-center gap-2 px-8 py-4 bg-moss text-forest rounded-full
+                           font-bold text-[0.95rem] hover:bg-mint transition-all duration-300
+                           hover:scale-105 hover:shadow-2xl hover:shadow-moss/30 active:scale-95"
               >
-                Shop Now
+                {t('hero.shopNow')}
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                      fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -117,10 +119,10 @@ export default function Hero() {
 
               <button
                 className="px-8 py-4 border-2 border-forest/20 text-forest rounded-full font-bold
-                           text-[0.95rem] hover:border-forest hover:bg-forest/5
+                           text-[0.95rem] hover:border-moss hover:bg-moss/8
                            transition-all duration-300 active:scale-95"
               >
-                Take the Quiz
+                {t('hero.quiz')}
               </button>
             </motion.div>
 
@@ -149,28 +151,34 @@ export default function Hero() {
             className="relative flex items-center justify-center h-[480px] lg:h-[580px]"
           >
             <div className="w-full h-full">
-              <CapsuleScene />
+              {lowPerformanceMode ? (
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-[280px] h-[280px] rounded-full bg-gradient-to-br from-moss/30 via-mint/20 to-sage/30 blur-2xl" />
+                </div>
+              ) : (
+                <CapsuleScene />
+              )}
             </div>
 
             <motion.div
-              animate={{ y: [-6, 6, -6] }}
-              transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-8 right-2 lg:right-0 bg-white/85 backdrop-blur-md
+              animate={lowPerformanceMode ? undefined : { y: [-6, 6, -6] }}
+              transition={lowPerformanceMode ? undefined : { duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute top-8 right-2 lg:right-0 bg-white/90 backdrop-blur-md
                          rounded-2xl p-4 shadow-lg border border-forest/8 max-w-[150px]"
             >
-              <p className="text-[0.65rem] text-forest/50 font-medium">Survival Rate</p>
-              <p className="text-[1.6rem] font-black text-forest leading-none mt-0.5">100%</p>
-              <p className="text-[0.65rem] text-moss mt-1">Reaches your gut</p>
+              <p className="text-[0.65rem] text-forest/50 font-medium">{t('hero.survival')}</p>
+              <p className="text-[1.6rem] font-extrabold text-forest leading-none mt-0.5">100%</p>
+              <p className="text-[0.65rem] text-moss mt-1">{t('hero.reaches')}</p>
             </motion.div>
 
             <motion.div
-              animate={{ y: [6, -6, 6] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute bottom-16 left-0 lg:-left-6 bg-white/85 backdrop-blur-md
+              animate={lowPerformanceMode ? undefined : { y: [6, -6, 6] }}
+              transition={lowPerformanceMode ? undefined : { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              className="absolute bottom-16 left-0 lg:-left-6 bg-white/90 backdrop-blur-md
                          rounded-2xl p-4 shadow-lg border border-forest/8 max-w-[170px]"
             >
               <p className="text-[0.65rem] text-forest/50 font-medium">Daily Synbiotic</p>
-              <p className="text-base font-black text-forest mt-0.5">50B AFU</p>
+              <p className="text-base font-extrabold text-forest mt-0.5">50B AFU</p>
               <div className="flex gap-1 mt-2">
                 {Array.from({ length: 5 }, (_, i) => (
                   <div
@@ -194,9 +202,9 @@ export default function Hero() {
       >
         <span className="text-[0.6rem] text-forest/35 uppercase tracking-[0.2em]">Scroll</span>
         <motion.div
-          animate={{ y: [0, 9, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity }}
-          className="w-px h-8 bg-gradient-to-b from-forest/35 to-transparent rounded-full"
+          animate={lowPerformanceMode ? undefined : { y: [0, 9, 0] }}
+          transition={lowPerformanceMode ? undefined : { duration: 1.6, repeat: Infinity }}
+          className="w-px h-8 bg-gradient-to-b from-moss/50 to-transparent rounded-full"
         />
       </motion.div>
     </section>

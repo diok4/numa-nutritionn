@@ -7,16 +7,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand palette
-        forest: '#0F3D2E',
-        moss:   '#3B6F57',
-        sage:   '#DCEFE6',
-        beige:  '#F5F3EE',
-        cream:  '#FAF8F4',
-        mint:   '#7BBFA0',
+        // NUMA Brand palette (Brandbook aligned)
+        forest: '#0A0A0A',   // near-black — dark backgrounds, primary text
+        moss:   '#3DDC84',   // bright NUMA green — primary accent
+        sage:   '#D4F7E8',   // light mint — text on dark, light accents
+        beige:  '#F4F4F4',   // neutral light gray — section backgrounds
+        cream:  '#FFFFFF',   // pure white — card backgrounds
+        mint:   '#25C46F',   // deeper green — secondary accent
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         float: {

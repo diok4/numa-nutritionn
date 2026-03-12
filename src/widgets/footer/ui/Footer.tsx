@@ -1,7 +1,9 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
+import { useLang } from '@/shared/lib/i18n'
 
 const FOOTER_COLS: Record<string, string[]> = {
   Products: ['Daily Synbiotic', 'Daily Multivitamin', 'Energy + Focus', 'Sleep + Restore', 'Bundles'],
@@ -23,6 +25,7 @@ export default function Footer() {
 
   const [email,      setEmail]      = useState('')
   const [subscribed, setSubscribed] = useState(false)
+  const { t } = useLang()
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,12 +47,8 @@ export default function Footer() {
           className="pb-16 border-b border-sage/10 mb-14"
         >
           <h2 className="text-[1.85rem] sm:text-[2.4rem] lg:text-[3.2rem] xl:text-[3.8rem]
-                         font-black text-sage leading-tight max-w-4xl">
-            Pioneering microbiome science
-            <br />
-            for{' '}
-            <span className="text-mint">human</span> and{' '}
-            <span className="text-mint">planetary</span> health.
+                         font-extrabold text-sage leading-tight max-w-4xl">
+            {t('footer.tagline')}
           </h2>
         </motion.div>
 
@@ -66,12 +65,11 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-full bg-sage flex items-center justify-center">
                 <div className="w-3 h-3 rounded-full bg-forest" />
               </div>
-              <span className="text-[1.2rem] font-black">Numa</span>
+              <span className="text-[1.2rem] font-extrabold">NUMA</span>
             </div>
 
             <p className="text-sage/45 text-sm leading-relaxed mb-6 max-w-xs">
-              Join 100,000+ people using Numa to transform their gut health and
-              overall wellbeing.
+              {t('footer.join')}
             </p>
 
             <form onSubmit={handleSubscribe} className="flex gap-2">
@@ -81,7 +79,7 @@ export default function Footer() {
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    placeholder="Your email address"
+                    placeholder={t('footer.emailPlaceholder')}
                     required
                     className="flex-1 px-4 py-3 rounded-xl bg-sage/8 border border-sage/18
                                text-sage placeholder-sage/28 text-sm
@@ -92,7 +90,7 @@ export default function Footer() {
                     className="px-5 py-3 bg-sage text-forest rounded-xl font-bold text-sm
                                hover:bg-white transition-colors whitespace-nowrap active:scale-95"
                   >
-                    Join
+                    {t('footer.joinBtn')}
                   </button>
                 </>
               ) : (
@@ -101,7 +99,7 @@ export default function Footer() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-sage/65 text-sm py-3"
                 >
-                  ✓ You&apos;re in! Welcome to the Numa community.
+                  {t('footer.subscribed')}
                 </motion.p>
               )}
             </form>
@@ -156,7 +154,7 @@ export default function Footer() {
           className="pt-8 border-t border-sage/10 flex flex-col sm:flex-row
                      items-center justify-between gap-4 text-sage/28 text-xs"
         >
-          <span>© 2026 Numa Nutrition, Inc. All rights reserved.</span>
+          <span>{t('footer.copy')}</span>
 
           <div className="flex items-center gap-5">
             {['Privacy', 'Terms', 'Cookies'].map(item => (
@@ -168,7 +166,7 @@ export default function Footer() {
 
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
-            <span>Carbon neutral shipping</span>
+            <span>{t('footer.carbon')}</span>
           </div>
         </motion.div>
 

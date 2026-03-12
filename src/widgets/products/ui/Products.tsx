@@ -1,20 +1,23 @@
 'use client'
 
 import { useRef } from 'react'
+import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
+import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
+import { useLang } from '@/shared/lib/i18n'
 
+// Prices in UZS
 const PRODUCTS = [
   {
     id:          1,
     name:        'Daily Synbiotic',
     tagline:     'Complete gut health',
     description: '50B AFU probiotic + prebiotic formula for comprehensive microbiome support.',
-    price:       '$49.99',
-    period:      '/month',
-    badge:       'Best Seller',
+    priceUZS:    149000,
+    badge:       'Хит продаж',
     meta:        '24 strains',
-    bg:          ['#0F3D2E', '#2a6048'],
-    accent:      '#DCEFE6',
+    bg:          ['#0A0A0A', '#1a1a1a'],
+    accent:      '#D4F7E8',
     label:       'SYNBIOTIC',
   },
   {
@@ -22,12 +25,11 @@ const PRODUCTS = [
     name:        'Daily Multivitamin',
     tagline:     'Complete daily nutrition',
     description: '25+ essential vitamins and minerals derived from real whole-food sources.',
-    price:       '$34.99',
-    period:      '/month',
-    badge:       'New',
+    priceUZS:    119000,
+    badge:       'Новинка',
     meta:        '25+ nutrients',
-    bg:          ['#3B6F57', '#5B8F76'],
-    accent:      '#F5F3EE',
+    bg:          ['#0d2a1a', '#1a4d2e'],
+    accent:      '#D4F7E8',
     label:       'MULTI',
   },
   {
@@ -35,12 +37,11 @@ const PRODUCTS = [
     name:        'Energy + Focus',
     tagline:     'Cognitive performance',
     description: 'Nootropic adaptogens for sustained mental clarity without the crash.',
-    price:       '$44.99',
-    period:      '/month',
-    badge:       'Popular',
+    priceUZS:    139000,
+    badge:       'Популярный',
     meta:        '12 adaptogens',
-    bg:          ['#1a5c42', '#2d7a5a'],
-    accent:      '#DCEFE6',
+    bg:          ['#1a0a0a', '#3a1515'],
+    accent:      '#FFD4D4',
     label:       'FOCUS',
   },
   {
@@ -48,12 +49,11 @@ const PRODUCTS = [
     name:        'Sleep + Restore',
     tagline:     'Deep recovery formula',
     description: 'Magnesium, L-Theanine and calming botanicals for restful sleep.',
-    price:       '$39.99',
-    period:      '/month',
-    badge:       'Fan Fav',
+    priceUZS:    129000,
+    badge:       'Любимый',
     meta:        '8 botanicals',
-    bg:          ['#0a2b1e', '#1a4a35'],
-    accent:      '#DCEFE6',
+    bg:          ['#0a0a1a', '#151530'],
+    accent:      '#D4D4F7',
     label:       'SLEEP',
   },
 ]
@@ -62,15 +62,17 @@ function BottleIllustration({
   accent,
   label,
   index,
+  animateBottle,
 }: {
   accent: string
   label: string
   index: number
+  animateBottle: boolean
 }) {
   return (
     <motion.div
-      animate={{ y: [-10, 10, -10] }}
-      transition={{ duration: 4.5 + index * 0.6, repeat: Infinity, ease: 'easeInOut' }}
+      animate={animateBottle ? { y: [-10, 10, -10] } : undefined}
+      transition={animateBottle ? { duration: 4.5 + index * 0.6, repeat: Infinity, ease: 'easeInOut' } : undefined}
       className="relative w-28 h-40 mx-auto"
     >
       <div
@@ -104,9 +106,17 @@ function BottleIllustration({
 function ProductCard({
   product,
   index,
+  lowPerformanceMode,
+  formattedPrice,
+  shopLabel,
+  perMonth,
 }: {
   product: (typeof PRODUCTS)[0]
   index: number
+  lowPerformanceMode: boolean
+  formattedPrice: string
+  shopLabel: string
+  perMonth: string
 }) {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
@@ -117,7 +127,7 @@ function ProductCard({
       initial={{ opacity: 0, y: 56 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.85, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -10, transition: { duration: 0.3 } }}
+      whileHover={lowPerformanceMode ? undefined : { y: -10, transition: { duration: 0.3 } }}
       className="group relative rounded-[1.6rem] overflow-hidden cursor-pointer"
       style={{
         background: `linear-gradient(145deg, ${product.bg[0]}, ${product.bg[1]})`,
@@ -146,12 +156,17 @@ function ProductCard({
         </div>
 
         <div className="flex-1 flex items-center justify-center py-6">
-          <BottleIllustration accent={product.accent} label={product.label} index={index} />
+          <BottleIllustration
+            accent={product.accent}
+            label={product.label}
+            index={index}
+            animateBottle={!lowPerformanceMode}
+          />
         </div>
 
         <div className="space-y-2">
           <div>
-            <h3 className="text-[1.15rem] font-black" style={{ color: product.accent }}>
+            <h3 className="text-[1.15rem] font-extrabold" style={{ color: product.accent }}>
               {product.name}
             </h3>
             <p className="text-[0.78rem] font-medium opacity-65" style={{ color: product.accent }}>
@@ -165,21 +180,21 @@ function ProductCard({
 
           <div className="flex items-center justify-between pt-2">
             <div>
-              <span className="text-[1.55rem] font-black" style={{ color: product.accent }}>
-                {product.price}
+              <span className="text-[1.3rem] font-extrabold" style={{ color: product.accent }}>
+                {formattedPrice}
               </span>
               <span className="text-xs opacity-55 ml-1" style={{ color: product.accent }}>
-                {product.period}
+                {perMonth}
               </span>
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.06 }}
+              whileHover={lowPerformanceMode ? undefined : { scale: 1.06 }}
               whileTap={{ scale: 0.95 }}
               className="px-5 py-2.5 rounded-full text-sm font-bold transition-all"
               style={{ background: product.accent, color: product.bg[0] }}
             >
-              Shop →
+              {shopLabel} →
             </motion.button>
           </div>
         </div>
@@ -191,6 +206,11 @@ function ProductCard({
 export default function Products() {
   const headerRef = useRef<HTMLDivElement>(null)
   const inView    = useInView(headerRef, { once: true, margin: '-80px' })
+  const lowPerformanceMode = useLowPerformanceMode()
+  const { lang, t } = useLang()
+
+  const formatPrice = (p: number) =>
+    p.toLocaleString('ru-RU') + ' ' + (lang === 'en' ? 'UZS' : lang === 'uz' ? 'so\'m' : 'сум')
 
   return (
     <section id="products" className="py-24 lg:py-36 bg-beige">
@@ -203,18 +223,18 @@ export default function Products() {
             transition={{ duration: 0.6 }}
             className="text-moss text-sm font-semibold uppercase tracking-widest"
           >
-            The Collection
+            {t('products.label')}
           </motion.span>
 
           <motion.h2
             initial={{ opacity: 0, y: 28 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-black text-forest mt-3 leading-tight"
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-forest mt-3 leading-tight"
           >
-            Whole body health
+            {t('products.title1')}
             <br />
-            starts in the gut.
+            {t('products.title2')}
           </motion.h2>
 
           <motion.p
@@ -223,14 +243,21 @@ export default function Products() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 text-forest/60 text-lg max-w-xl mx-auto"
           >
-            Every formula is crafted with precision-selected ingredients,
-            third-party tested, and backed by clinical research.
+            {t('products.desc')}
           </motion.p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {PRODUCTS.map((product, i) => (
-            <ProductCard key={product.id} product={product} index={i} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              index={i}
+              lowPerformanceMode={lowPerformanceMode}
+              formattedPrice={formatPrice(product.priceUZS)}
+              shopLabel={t('products.shop')}
+              perMonth={t('products.perMonth')}
+            />
           ))}
         </div>
 
@@ -240,14 +267,14 @@ export default function Products() {
           transition={{ duration: 0.6, delay: 0.75 }}
           className="text-center mt-12"
         >
-          <button className="group inline-flex items-center gap-2 text-forest font-semibold hover:text-moss transition-colors">
-            View all products
+          <Link href="/catalog" className="group inline-flex items-center gap-2 text-forest font-semibold hover:text-moss transition-colors">
+            {t('products.viewAll')}
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                  fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

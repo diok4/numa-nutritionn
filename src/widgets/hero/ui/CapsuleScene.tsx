@@ -2,8 +2,9 @@
 
 import { useRef, useMemo, Suspense } from 'react'
 import { Canvas, useFrame }          from '@react-three/fiber'
-import { Float, Environment }        from '@react-three/drei'
+import { Float }                     from '@react-three/drei'
 import * as THREE                    from 'three'
+import { useLowPerformanceMode }     from '@/shared/lib/useLowPerformanceMode'
 
 function Particles({ count = 160 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null)
@@ -22,7 +23,8 @@ function Particles({ count = 160 }: { count?: number }) {
       positions[i * 3 + 1] = r * Math.cos(phi)
       positions[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta)
 
-      color.setHSL(0.38 + Math.random() * 0.08, 0.45, 0.55 + Math.random() * 0.2)
+      // NUMA green palette
+      color.setHSL(0.38 + Math.random() * 0.06, 0.75, 0.55 + Math.random() * 0.2)
       colors[i * 3]     = color.r
       colors[i * 3 + 1] = color.g
       colors[i * 3 + 2] = color.b
@@ -47,7 +49,7 @@ function Particles({ count = 160 }: { count?: number }) {
   )
 }
 
-function InnerCapsule() {
+function InnerCapsule({ lowPerformanceMode }: { lowPerformanceMode: boolean }) {
   const ref = useRef<THREE.Mesh>(null)
 
   useFrame(({ clock }) => {
@@ -57,9 +59,9 @@ function InnerCapsule() {
 
   return (
     <mesh ref={ref}>
-      <capsuleGeometry args={[0.52, 0.75, 4, 24]} />
+      <capsuleGeometry args={[0.52, 0.75, 4, lowPerformanceMode ? 12 : 20]} />
       <meshStandardMaterial
-        color="#DCEFE6"
+        color="#D4F7E8"
         roughness={0.25}
         metalness={0.05}
         transparent
@@ -69,7 +71,7 @@ function InnerCapsule() {
   )
 }
 
-function OuterShell() {
+function OuterShell({ lowPerformanceMode }: { lowPerformanceMode: boolean }) {
   const ref  = useRef<THREE.Mesh>(null)
   const glow = useRef<THREE.Mesh>(null)
 
@@ -86,9 +88,9 @@ function OuterShell() {
   return (
     <group>
       <mesh ref={glow}>
-        <sphereGeometry args={[1.7, 32, 32]} />
+        <sphereGeometry args={[1.7, lowPerformanceMode ? 18 : 28, lowPerformanceMode ? 18 : 28]} />
         <meshStandardMaterial
-          color="#DCEFE6"
+          color="#D4F7E8"
           transparent
           opacity={0.1}
           side={THREE.BackSide}
@@ -96,9 +98,9 @@ function OuterShell() {
       </mesh>
 
       <mesh ref={ref}>
-        <capsuleGeometry args={[0.62, 0.92, 4, 32]} />
+        <capsuleGeometry args={[0.62, 0.92, 4, lowPerformanceMode ? 16 : 28]} />
         <meshPhysicalMaterial
-          color="#3B6F57"
+          color="#3DDC84"
           transmission={0.78}
           roughness={0.04}
           metalness={0}
@@ -112,15 +114,15 @@ function OuterShell() {
 
       {[0.58, -0.58].map((y, i) => (
         <mesh key={i} position={[0, y, 0]}>
-          <torusGeometry args={[0.625, 0.028, 8, 32]} />
-          <meshStandardMaterial color="#0F3D2E" roughness={0.2} metalness={0.6} />
+          <torusGeometry args={[0.625, 0.028, 8, lowPerformanceMode ? 18 : 30]} />
+          <meshStandardMaterial color="#0A0A0A" roughness={0.2} metalness={0.6} />
         </mesh>
       ))}
     </group>
   )
 }
 
-function OrbitingPills() {
+function OrbitingPills({ lowPerformanceMode }: { lowPerformanceMode: boolean }) {
   const group = useRef<THREE.Group>(null)
 
   useFrame(({ clock }) => {
@@ -128,19 +130,18 @@ function OrbitingPills() {
     group.current.rotation.y = clock.elapsedTime * 0.18
   })
 
-  const pills = useMemo(
-    () =>
-      Array.from({ length: 6 }, (_, i) => ({
-        angle:   (i / 6) * Math.PI * 2,
-        radius:  2.15,
+  const pills = useMemo(() => {
+    const total = lowPerformanceMode ? 4 : 6
+    return Array.from({ length: total }, (_, i) => ({
+        angle:   (i / total) * Math.PI * 2,
+        radius:  lowPerformanceMode ? 2 : 2.15,
         yOffset: Math.sin(i * 1.05) * 0.5,
         scale:   0.14 + (i % 3) * 0.03,
-        color:   i % 2 === 0 ? '#3B6F57' : '#DCEFE6',
+        color:   i % 2 === 0 ? '#3DDC84' : '#D4F7E8',
         rotX:    Math.random() * Math.PI,
         rotZ:    Math.random() * Math.PI,
-      })),
-    []
-  )
+      }))
+  }, [lowPerformanceMode])
 
   return (
     <group ref={group}>
@@ -155,7 +156,7 @@ function OrbitingPills() {
           scale={p.scale}
           rotation={[p.rotX, 0, p.rotZ]}
         >
-          <capsuleGeometry args={[1, 1.6, 4, 12]} />
+          <capsuleGeometry args={[1, 1.6, 4, lowPerformanceMode ? 8 : 12]} />
           <meshStandardMaterial color={p.color} roughness={0.3} transparent opacity={0.75} />
         </mesh>
       ))}
@@ -163,38 +164,38 @@ function OrbitingPills() {
   )
 }
 
-function Scene() {
+function Scene({ lowPerformanceMode }: { lowPerformanceMode: boolean }) {
   return (
     <>
-      <ambientLight intensity={0.65} color="#DCEFE6" />
-      <directionalLight position={[5, 8, 4]}    intensity={1.8}  color="#ffffff" castShadow />
-      <directionalLight position={[-4, -2, -4]}  intensity={0.45} color="#3B6F57" />
-      <pointLight       position={[3, 2, 4]}     intensity={0.9}  color="#DCEFE6" />
-      <pointLight       position={[-3, -1, -3]}  intensity={0.35} color="#0F3D2E" />
-
-      <Environment preset="forest" />
+      <ambientLight intensity={0.65} color="#D4F7E8" />
+      <directionalLight position={[5, 8, 4]}    intensity={1.8}  color="#ffffff" />
+      <directionalLight position={[-4, -2, -4]}  intensity={0.45} color="#3DDC84" />
+      <pointLight       position={[3, 2, 4]}     intensity={0.9}  color="#3DDC84" />
+      <pointLight       position={[-3, -1, -3]}  intensity={0.35} color="#0A0A0A" />
 
       <Float speed={1.8} rotationIntensity={0.45} floatIntensity={0.7}>
-        <InnerCapsule />
-        <OuterShell />
+        <InnerCapsule lowPerformanceMode={lowPerformanceMode} />
+        <OuterShell lowPerformanceMode={lowPerformanceMode} />
       </Float>
 
-      <OrbitingPills />
-      <Particles count={160} />
+      <OrbitingPills lowPerformanceMode={lowPerformanceMode} />
+      <Particles count={lowPerformanceMode ? 70 : 120} />
     </>
   )
 }
 
 export default function CapsuleScene() {
+  const lowPerformanceMode = useLowPerformanceMode()
+
   return (
     <Canvas
       camera={{ position: [0, 0, 5.5], fov: 48 }}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      gl={{ antialias: !lowPerformanceMode, alpha: true, powerPreference: 'high-performance' }}
       style={{ background: 'transparent' }}
-      dpr={[1, 2]}
+      dpr={lowPerformanceMode ? [1, 1] : [1, 1.5]}
     >
       <Suspense fallback={null}>
-        <Scene />
+        <Scene lowPerformanceMode={lowPerformanceMode} />
       </Suspense>
     </Canvas>
   )

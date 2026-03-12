@@ -2,14 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── CSS custom properties ─── */
+/* ─── NUMA Brand CSS custom properties ─── */
 :root {
-  --forest: #0F3D2E;
-  --moss:   #3B6F57;
-  --sage:   #DCEFE6;
-  --beige:  #F5F3EE;
-  --cream:  #FAF8F4;
-  --mint:   #7BBFA0;
+  --forest: #0A0A0A;
+  --moss:   #3DDC84;
+  --sage:   #D4F7E8;
+  --beige:  #F4F4F4;
+  --cream:  #FFFFFF;
+  --mint:   #25C46F;
 }
 
 /* ─── Base resets ─── */
@@ -21,12 +21,13 @@
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--beige);
   color: var(--forest);
-  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-family: var(--font-jakarta), 'Plus Jakarta Sans', system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -39,7 +40,7 @@ body {
 
 /* ─── Text selection ─── */
 ::selection {
-  background: var(--sage);
+  background: var(--moss);
   color: var(--forest);
 }
 
@@ -53,15 +54,15 @@ body {
   }
 
   .glass-dark {
-    background: rgba(15, 61, 46, 0.08);
+    background: rgba(10, 10, 10, 0.08);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(15, 61, 46, 0.12);
+    border: 1px solid rgba(10, 10, 10, 0.12);
   }
 
   /* Gradient text utility */
   .text-gradient {
-    background: linear-gradient(135deg, var(--forest) 0%, var(--moss) 50%, var(--mint) 100%);
+    background: linear-gradient(135deg, var(--moss) 0%, var(--mint) 50%, var(--sage) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -78,4 +79,3 @@ body {
     border-radius: inherit;
   }
 }
-

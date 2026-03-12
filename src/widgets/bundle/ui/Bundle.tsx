@@ -2,22 +2,25 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
 
 function Bottle({
   color,
   label,
   delay,
   phase = 0,
+  animateBottle,
 }: {
   color: string
   label: string
   delay: number
   phase?: number
+  animateBottle: boolean
 }) {
   return (
     <motion.div
-      animate={{ y: [phase * 10 - 10, phase * 10 + 10, phase * 10 - 10] }}
-      transition={{ duration: 5 + delay * 0.5, repeat: Infinity, ease: 'easeInOut', delay }}
+      animate={animateBottle ? { y: [phase * 10 - 10, phase * 10 + 10, phase * 10 - 10] } : undefined}
+      transition={animateBottle ? { duration: 5 + delay * 0.5, repeat: Infinity, ease: 'easeInOut', delay } : undefined}
       className="relative w-28 h-44"
     >
       <div
@@ -48,6 +51,7 @@ function Bottle({
 export default function Bundle() {
   const ref    = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const lowPerformanceMode = useLowPerformanceMode()
 
   const INCLUSIONS = [
     'Daily Synbiotic — 50B AFU, 24 strains',
@@ -146,7 +150,7 @@ export default function Bundle() {
               </div>
 
               <motion.button
-                whileHover={{ scale: 1.04, boxShadow: '0 20px 40px rgba(220,239,230,0.18)' }}
+                whileHover={lowPerformanceMode ? undefined : { scale: 1.04, boxShadow: '0 20px 40px rgba(220,239,230,0.18)' }}
                 whileTap={{ scale: 0.96 }}
                 className="px-10 py-4 bg-sage text-forest rounded-full font-bold text-[0.95rem] w-fit
                            hover:bg-white transition-all duration-300 active:scale-95"
@@ -159,11 +163,11 @@ export default function Bundle() {
             <div className="relative flex items-center justify-center min-h-[380px] p-10 lg:p-16">
               <div className="absolute w-48 h-48 rounded-full bg-sage/8 blur-3xl" />
               <div className="relative z-10 -mr-8">
-                <Bottle color="#DCEFE6" label="SYNBIOTIC" delay={0} phase={-1} />
+                <Bottle color="#DCEFE6" label="SYNBIOTIC" delay={0} phase={-1} animateBottle={!lowPerformanceMode} />
               </div>
               <div className="relative z-20 text-3xl font-black text-sage/20 px-2">+</div>
               <div className="relative z-10 -ml-8">
-                <Bottle color="#7BBFA0" label="MULTI" delay={0.6} phase={1} />
+                <Bottle color="#7BBFA0" label="MULTI" delay={0.6} phase={1} animateBottle={!lowPerformanceMode} />
               </div>
             </div>
           </div>
