@@ -5,6 +5,7 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import gsap                                           from 'gsap'
 import { ScrollTrigger }                              from 'gsap/ScrollTrigger'
 import { useLowPerformanceMode }                      from '@/shared/lib/useLowPerformanceMode'
+import { useLang }                                    from '@/shared/lib/i18n'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -115,30 +116,32 @@ function HumanSilhouette({ lowPerformanceMode }: { lowPerformanceMode: boolean }
   )
 }
 
-const FACTS = [
-  {
-    icon:  '🧬',
-    title: '38 Trillion Microbes',
-    body:  'You carry more microbial cells than human cells. Your microbiome is essentially another organ.',
-  },
-  {
-    icon:  '🧠',
-    title: 'The Gut-Brain Axis',
-    body:  '95% of your serotonin is produced in the gut. Your microbiome directly influences mood and cognition.',
-  },
-  {
-    icon:  '🛡️',
-    title: '70% of Immunity',
-    body:  'The majority of your immune system lives in your gut. A balanced microbiome is your first line of defense.',
-  },
-]
+const FACTS_I18N = {
+  ru: [
+    { icon: '🧬', title: '38 триллионов микробов',  body: 'Вы носите больше микробных клеток, чем человеческих. Ваш микробиом — это фактически отдельный орган.' },
+    { icon: '🧠', title: 'Ось кишечник-мозг',       body: '95% серотонина вырабатывается в кишечнике. Микробиом напрямую влияет на настроение и когнитивные функции.' },
+    { icon: '🛡️', title: '70% иммунитета',          body: 'Большая часть иммунной системы находится в кишечнике. Здоровый микробиом — первая линия защиты.' },
+  ],
+  uz: [
+    { icon: '🧬', title: '38 trillion mikrob',       body: 'Siz inson hujayralaridan ko\'proq mikrobial hujayra ko\'taryapsiz. Mikrobiomingiz aslida alohida organ.' },
+    { icon: '🧠', title: 'Ichak-miya o\'qi',          body: 'Serotonin 95% ichakda ishlab chiqariladi. Mikrobiom kayfiyat va kognitiv funktsiyalarga to\'g\'ridan-to\'g\'ri ta\'sir qiladi.' },
+    { icon: '🛡️', title: 'Immunitetning 70%i',       body: 'Immunitet tizimining katta qismi ichakda joylashgan. Sog\'lom mikrobiom birinchi himoya chizig\'i.' },
+  ],
+  en: [
+    { icon: '🧬', title: '38 Trillion Microbes',     body: 'You carry more microbial cells than human cells. Your microbiome is essentially another organ.' },
+    { icon: '🧠', title: 'The Gut-Brain Axis',       body: '95% of your serotonin is produced in the gut. Your microbiome directly influences mood and cognition.' },
+    { icon: '🛡️', title: '70% of Immunity',          body: 'The majority of your immune system lives in your gut. A balanced microbiome is your first line of defense.' },
+  ],
+}
 
 export default function Education() {
   const sectionRef          = useRef<HTMLElement>(null)
   const isInView            = useInView(sectionRef, { once: true, margin: '-80px' })
   const lowPerformanceMode  = useLowPerformanceMode()
+  const { lang, t }         = useLang()
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
   const y                   = useTransform(scrollYProgress, [0, 1], lowPerformanceMode ? [0, 0] : [40, -40])
+  const FACTS               = FACTS_I18N[lang]
 
   useEffect(() => {
     if (typeof window === 'undefined' || lowPerformanceMode) return
@@ -166,16 +169,15 @@ export default function Education() {
           className="text-center mb-16"
         >
           <span className="text-moss text-sm font-semibold uppercase tracking-widest">
-            The Human Microbiome
+            {t('edu.label')}
           </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-forest mt-3 leading-tight">
-            You are more
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-forest mt-3 leading-tight">
+            {t('edu.title1')}
             <br />
-            than human.
+            {t('edu.title2')}
           </h2>
           <p className="text-forest/55 text-lg mt-4 max-w-xl mx-auto">
-            Your body is home to trillions of microorganisms that profoundly influence
-            your health, mood, immunity, and even your DNA expression.
+            {t('edu.desc')}
           </p>
         </motion.div>
 
@@ -209,8 +211,10 @@ export default function Education() {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-[2rem] font-black">1,000+</div>
-                  <div className="text-sage/60 text-sm mt-0.5">Species in your gut microbiome</div>
+                  <div className="text-[2rem] font-extrabold">1,000+</div>
+                  <div className="text-sage/60 text-sm mt-0.5">
+                    {lang === 'ru' ? 'Видов в вашем кишечном микробиоме' : lang === 'uz' ? 'Ichak mikrobiomingizda turlar' : 'Species in your gut microbiome'}
+                  </div>
                 </div>
                 <div className="w-16 h-16 rounded-full border-2 border-sage/25 flex items-center justify-center">
                   <div className="w-10 h-10 rounded-full bg-sage/15 flex items-center justify-center">
@@ -219,8 +223,11 @@ export default function Education() {
                 </div>
               </div>
               <p className="mt-4 text-sage/55 text-sm leading-relaxed">
-                Numa&apos;s synbiotic formula feeds and replenishes these diverse communities
-                with precision-selected strains and prebiotic fibres.
+                {lang === 'ru'
+                  ? 'Синбиотическая формула NUMA питает и пополняет эти разнообразные сообщества тщательно отобранными штаммами и пребиотическими волокнами.'
+                  : lang === 'uz'
+                  ? 'NUMA sinbiotik formulasi bu xilma-xil jamoalarni aniq tanlangan shtammlar va prebiotik tolalar bilan oziqlantiradi va to\'ldiradi.'
+                  : 'Numa\'s synbiotic formula feeds and replenishes these diverse communities with precision-selected strains and prebiotic fibres.'}
               </p>
             </motion.div>
           </div>
@@ -238,14 +245,14 @@ export default function Education() {
           className="grid grid-cols-2 lg:grid-cols-4 gap-6 p-8 rounded-3xl bg-forest/5 border border-forest/8"
         >
           {[
-            { v: '15+',  l: 'Years of research'           },
-            { v: '40K+', l: 'Clinical study participants'  },
-            { v: '500+', l: 'Published studies'            },
-            { v: '99%',  l: 'Customer satisfaction'        },
-          ].map(({ v, l }) => (
-            <div key={l} className="text-center">
-              <div className="text-[1.9rem] font-black text-forest">{v}</div>
-              <div className="text-forest/45 text-sm mt-1">{l}</div>
+            { v: '15+',  ru: 'Лет исследований',          uz: 'Yillik tadqiqot',              en: 'Years of research'          },
+            { v: '40K+', ru: 'Участников клин. иссл.',    uz: 'Klinik tadqiqot ishtirokchisi', en: 'Clinical study participants' },
+            { v: '500+', ru: 'Опубликованных исследований',uz: 'Nashr etilgan tadqiqotlar',     en: 'Published studies'          },
+            { v: '99%',  ru: 'Удовлетворённость клиентов',uz: 'Mijozlar mamnunligi',           en: 'Customer satisfaction'      },
+          ].map(({ v, ru, uz, en }) => (
+            <div key={v} className="text-center">
+              <div className="text-[1.9rem] font-extrabold text-forest">{v}</div>
+              <div className="text-forest/45 text-sm mt-1">{lang === 'ru' ? ru : lang === 'uz' ? uz : en}</div>
             </div>
           ))}
         </motion.div>

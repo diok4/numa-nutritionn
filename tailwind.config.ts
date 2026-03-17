@@ -9,11 +9,11 @@ const config: Config = {
       colors: {
         // NUMA Brand palette (Brandbook aligned)
         forest: '#0A0A0A',   // near-black — dark backgrounds, primary text
-        moss:   '#3DDC84',   // bright NUMA green — primary accent
+        moss:   '#1A4D13',   // brand green — primary accent
         sage:   '#D4F7E8',   // light mint — text on dark, light accents
         beige:  '#F4F4F4',   // neutral light gray — section backgrounds
         cream:  '#FFFFFF',   // pure white — card backgrounds
-        mint:   '#25C46F',   // deeper green — secondary accent
+        mint:   '#1A4D13',   // brand green — secondary accent
       },
       fontFamily: {
         sans: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],

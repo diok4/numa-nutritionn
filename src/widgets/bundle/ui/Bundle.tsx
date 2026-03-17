@@ -1,191 +1,115 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
-
-function Bottle({
-  color,
-  label,
-  delay,
-  phase = 0,
-  animateBottle,
-}: {
-  color: string
-  label: string
-  delay: number
-  phase?: number
-  animateBottle: boolean
-}) {
-  return (
-    <motion.div
-      animate={animateBottle ? { y: [phase * 10 - 10, phase * 10 + 10, phase * 10 - 10] } : undefined}
-      transition={animateBottle ? { duration: 5 + delay * 0.5, repeat: Infinity, ease: 'easeInOut', delay } : undefined}
-      className="relative w-28 h-44"
-    >
-      <div
-        className="absolute inset-x-3 bottom-0 top-6 rounded-2xl"
-        style={{
-          background: `linear-gradient(180deg, ${color}88 0%, ${color}44 100%)`,
-          border:     `1px solid ${color}55`,
-        }}
-      />
-      <div className="absolute inset-x-7 top-2 h-6 rounded-t-lg" style={{ background: `${color}55` }} />
-      <div className="absolute inset-x-5 top-0 h-4 rounded-t-xl" style={{ background: `${color}cc` }} />
-      <div
-        className="absolute inset-x-5 top-10 bottom-4 rounded-xl flex flex-col items-center justify-center gap-1"
-        style={{ background: `${color}1a` }}
-      >
-        <span className="text-[8px] font-black" style={{ color }}>NUMA</span>
-        <div className="w-8 h-px" style={{ background: `${color}44` }} />
-        <span className="text-[7px] font-semibold tracking-widest" style={{ color: `${color}99` }}>
-          {label}
-        </span>
-      </div>
-      <div className="absolute left-5 top-8 w-1.5 bottom-5 rounded-full opacity-20" style={{ background: color }} />
-      <div className="absolute inset-0 rounded-2xl blur-2xl opacity-15" style={{ background: color }} />
-    </motion.div>
-  )
-}
+import { useLang } from '@/shared/lib/i18n'
 
 export default function Bundle() {
-  const ref    = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   const lowPerformanceMode = useLowPerformanceMode()
+  const { lang, t } = useLang()
 
-  const INCLUSIONS = [
-    'Daily Synbiotic — 50B AFU, 24 strains',
-    'Daily Multivitamin — 25+ nutrients',
-    'Free shipping & free returns',
-    'Cancel anytime',
-  ]
-
-  const TRUST = [
-    '30-day money back guarantee',
-    'Subscribe & save',
-    'Free US shipping',
-    'Doctor formulated',
-  ]
+  const TRUST = lang === 'ru'
+    ? ['30 дней — возврат денег', 'Подписка со скидкой', 'Доставка по Узбекистану', 'Разработано врачами']
+    : lang === 'uz'
+    ? ['30 kunlik pul qaytarish', 'Obuna va tejash', 'O\'zbekiston bo\'ylab yetkazish', 'Shifokorlar tomonidan yaratilgan']
+    : ['30-day money back guarantee', 'Subscribe & save', 'Delivery across Uzbekistan', 'Doctor formulated']
 
   return (
-    <section ref={ref} className="py-24 lg:py-36 bg-beige overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-
+    <section ref={ref} className="py-14 sm:py-16 lg:py-20 bg-beige overflow-hidden">
+      <div className="w-full">
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-14"
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full overflow-hidden shadow-[0_35px_80px_rgba(5,12,8,0.32)]"
         >
-          <span className="text-moss text-sm font-semibold uppercase tracking-widest">
-            Best Value
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-black text-forest mt-3">
-            The Complete System
-          </h2>
-        </motion.div>
+          <Image
+            src="/products/bundle-glass-bg.png"
+            alt=""
+            fill
+            aria-hidden={true}
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-[#030906]/62" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#020704]/82 via-[#04130a]/62 to-[#030906]/70" />
+          <div className="absolute top-0 right-[20%] w-[520px] h-[520px] rounded-full bg-moss/15 blur-[120px]" />
+          <div className="absolute bottom-[-120px] left-[12%] w-[420px] h-[420px] rounded-full bg-sage/10 blur-[110px]" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 48 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1.05, delay: 0.18 }}
-          className="relative rounded-[2.4rem] overflow-hidden bg-forest"
-        >
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute top-0 left-1/4  w-[420px] h-[420px] bg-moss/25  rounded-full blur-[80px]" />
-            <div className="absolute bottom-0 right-1/4 w-[340px] h-[340px] bg-sage/8 rounded-full blur-[80px]" />
-          </div>
+          <div className="relative z-10">
+            <div className="border-y border-white/20 bg-white/[0.08] backdrop-blur-[16px]">
+              <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-7 lg:gap-4 px-5 sm:px-8 lg:px-10 py-8 lg:py-10">
+                {/* Left */}
+                <div className="flex flex-col justify-center">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 border border-white/25 w-fit mb-6">
+                    <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />
+                    <span className="text-[0.75rem] text-white font-semibold uppercase tracking-[0.08em]">{t('bundle.badge')}</span>
+                  </div>
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2">
+                  <h3 className="text-[2rem] sm:text-[2.5rem] lg:text-[3.2rem] font-black text-white leading-[1.04] mb-5">
+                    <span className="inline bg-white/10 text-white px-2 py-1">{t('bundle.nameFull')}</span>
+                    <br />
+                    <span className="inline bg-white/14 text-white px-2 py-1">{t('bundle.nameGreen')}</span>
+                  </h3>
 
-            {/* Left — copy */}
-            <div className="p-10 lg:p-16 flex flex-col justify-center">
+                  <p className="text-white text-[1rem] sm:text-[1.05rem] leading-relaxed mb-6 max-w-[34rem]">{t('bundle.desc')}</p>
 
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full
-                              bg-sage/10 border border-sage/18 w-fit mb-8">
-                <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
-                <span className="text-[0.65rem] text-sage font-bold uppercase tracking-widest">
-                  Save 20% — Bundle Offer
-                </span>
-              </div>
+                  <div className="mb-7">
+                    <div className="text-white/45 text-[1.35rem] sm:text-[1.5rem] line-through leading-none">
+                      {lang === 'ru' ? '267 900 сум/мес' : lang === 'uz' ? '267 900 so\'m/oy' : '267,900 UZS/mo'}
+                    </div>
+                    <div className="text-[2.9rem] sm:text-[3.7rem] font-black text-white leading-[0.95] mt-1">
+                      {lang === 'ru' ? '217 000' : lang === 'uz' ? '217 000' : '217,000'}
+                      <span className="text-[1.6rem] sm:text-[2rem] ml-2 text-white">{lang === 'ru' ? 'сум' : lang === 'uz' ? 'so\'m' : 'UZS'}</span>
+                    </div>
+                  </div>
 
-              <h3 className="text-[2.4rem] lg:text-[3rem] font-black text-sage leading-tight mb-5">
-                Daily Essentials
-                <br />
-                <span className="text-mint">Duo</span>
-              </h3>
-
-              <p className="text-sage/55 text-lg leading-relaxed mb-8 max-w-sm">
-                Our two best-selling formulas combined. Daily Synbiotic + Daily
-                Multivitamin for complete daily nutrition and gut health.
-              </p>
-
-              <ul className="space-y-3 mb-10">
-                {INCLUSIONS.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -18 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.55 + i * 0.1 }}
-                    className="flex items-center gap-3"
+                  <motion.button
+                    whileHover={lowPerformanceMode ? undefined : { scale: 1.03, boxShadow: '0 24px 45px rgba(175,214,196,0.20)' }}
+                    whileTap={{ scale: 0.97 }}
+                    className="px-10 py-3.5 bg-white/12 border border-white/50 text-white rounded-full font-black text-[1.3rem] sm:text-[1.5rem] w-fit hover:bg-white/20 transition-all duration-300"
                   >
-                    <span className="w-5 h-5 rounded-full bg-moss flex items-center justify-center flex-shrink-0">
-                      <svg className="w-2.5 h-2.5 text-sage" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd" />
-                      </svg>
-                    </span>
-                    <span className="text-sage/65 text-sm">{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
-
-              <div className="mb-8">
-                <div className="text-sage/35 text-sm line-through">$84.98/mo</div>
-                <div className="text-[3rem] font-black text-sage leading-none">
-                  $67<span className="text-[1.6rem]">.98</span>
+                    {t('bundle.cta')}
+                  </motion.button>
                 </div>
-                <div className="text-sage/45 text-sm mt-1">/month · save $17</div>
+
+                {/* Right */}
+                <div className="relative flex items-center justify-center min-h-[320px] lg:min-h-[470px]">
+                  <div className="absolute w-[360px] h-[360px] rounded-full bg-sage/8 blur-[90px]" />
+                  <div className="absolute w-[280px] h-[280px] rounded-full bg-moss/15 blur-[70px] right-8 bottom-16" />
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 22, scale: 0.96 }}
+                    animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                    transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative z-20 w-full max-w-[320px] sm:max-w-[360px]"
+                  >
+                    <Image
+                      src="/products/small-1.png"
+                      alt="Detox duo"
+                      width={310}
+                      height={397}
+                      className="w-full h-auto object-contain drop-shadow-[0_30px_45px_rgba(0,0,0,0.45)] rounded-3xl"
+                    />
+                  </motion.div>
+                </div>
               </div>
 
-              <motion.button
-                whileHover={lowPerformanceMode ? undefined : { scale: 1.04, boxShadow: '0 20px 40px rgba(220,239,230,0.18)' }}
-                whileTap={{ scale: 0.96 }}
-                className="px-10 py-4 bg-sage text-forest rounded-full font-bold text-[0.95rem] w-fit
-                           hover:bg-white transition-all duration-300 active:scale-95"
-              >
-                Get the Bundle →
-              </motion.button>
-            </div>
-
-            {/* Right — bottles */}
-            <div className="relative flex items-center justify-center min-h-[380px] p-10 lg:p-16">
-              <div className="absolute w-48 h-48 rounded-full bg-sage/8 blur-3xl" />
-              <div className="relative z-10 -mr-8">
-                <Bottle color="#DCEFE6" label="SYNBIOTIC" delay={0} phase={-1} animateBottle={!lowPerformanceMode} />
-              </div>
-              <div className="relative z-20 text-3xl font-black text-sage/20 px-2">+</div>
-              <div className="relative z-10 -ml-8">
-                <Bottle color="#7BBFA0" label="MULTI" delay={0.6} phase={1} animateBottle={!lowPerformanceMode} />
+              <div className="px-5 sm:px-8 lg:px-10 pb-6">
+                <div className="flex flex-wrap items-center gap-3.5">
+                  {TRUST.map(item => (
+                    <span key={item} className="px-4 py-2 rounded-full border border-white/28 bg-white/[0.08] text-white text-sm">
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-6 lg:gap-10"
-        >
-          {TRUST.map(item => (
-            <span key={item} className="text-forest/45 text-sm font-medium">
-              ✓ {item}
-            </span>
-          ))}
-        </motion.div>
-
       </div>
     </section>
   )

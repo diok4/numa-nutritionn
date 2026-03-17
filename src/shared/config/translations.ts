@@ -2,6 +2,9 @@ export type Lang = 'ru' | 'uz' | 'en'
 
 export const translations = {
   // ── Navbar ──
+  'nav.home':       { ru: 'Главная',    uz: 'Bosh sahifa', en: 'Home'        },
+  'nav.products':   { ru: 'Продукты',   uz: 'Mahsulotlar', en: 'Products'    },
+  'nav.contact':    { ru: 'Контакты',   uz: 'Aloqa',       en: 'Contact'     },
   'nav.shop':       { ru: 'Магазин',    uz: 'Do\'kon',     en: 'Shop'        },
   'nav.catalog':    { ru: 'Каталог',    uz: 'Katalog',     en: 'Catalog'     },
   'nav.science':    { ru: 'Наука',      uz: 'Fan',         en: 'Science'     },
@@ -24,6 +27,13 @@ export const translations = {
   'hero.quiz':      { ru: 'Пройти тест',   uz: 'Test o\'tish',      en: 'Take the Quiz' },
   'hero.survival':  { ru: 'Выживаемость',  uz: 'Omon qolish',       en: 'Survival Rate' },
   'hero.reaches':   { ru: 'Достигает кишечника', uz: 'Ichakka yetadi', en: 'Reaches your gut' },
+
+  // ── Stories ──
+  'stories.title': {
+    ru: 'Истории учёных, новаторов и таких же людей, как вы.',
+    uz: 'Olimlar, novatorlar va siz kabi odamlarning hikoyalari.',
+    en: 'Stories from scientists, innovators, and members like you.',
+  },
 
   // ── Products ──
   'products.label':   { ru: 'Коллекция',       uz: 'Kolleksiya',        en: 'The Collection'    },

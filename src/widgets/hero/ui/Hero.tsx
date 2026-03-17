@@ -1,211 +1,126 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-import dynamic    from 'next/dynamic'
-import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
 import { useLang } from '@/shared/lib/i18n'
+import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
 
-const CapsuleScene = dynamic(() => import('./CapsuleScene'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="w-24 h-24 rounded-full border-2 border-moss/30 border-t-moss animate-spin" />
-    </div>
-  ),
-})
+const GREEN = '#1a3d18'
 
 const fadeUp = {
-  hidden:  { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 28 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.14, duration: 0.85, ease: [0.16, 1, 0.3, 1] },
+    transition: { delay: i * 0.12, duration: 0.8, ease: [0.16, 1, 0.3, 1] },
   }),
 }
 
-const STATS = [
-  { value: '50B',  labelKey: 'AFU per dose'              },
-  { value: '24',   labelKey: 'Clinically studied strains' },
-  { value: '4.6×', labelKey: 'Healthy bacteria increase'  },
-]
-
-const BADGES = ['Vegan', 'Gluten Free', 'Non-GMO', 'Clinically Tested']
-
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null)
-  const lowPerformanceMode = useLowPerformanceMode()
   const { t } = useLang()
+  const lowPerformanceMode = useLowPerformanceMode()
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-cream"
+      className="relative min-h-[92svh] lg:min-h-screen flex items-stretch overflow-hidden bg-[#f5f2ec]"
     >
-      {/* Background blobs — NUMA green */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4  right-0  w-[480px] h-[480px] bg-moss/10 rounded-full blur-[80px]" />
-        <div className="absolute bottom-1/4 left-0  w-[380px] h-[380px] bg-moss/8  rounded-full blur-[70px]" />
-        <div className="absolute top-1/2  left-1/3 w-[280px] h-[280px] bg-sage/20  rounded-full blur-[60px]" />
-      </div>
+      {/* Left content column */}
+      <div className="relative z-10 flex items-center w-full lg:w-[52%] px-6 sm:px-10 lg:px-16 pt-24 sm:pt-28 lg:pt-28 pb-14 sm:pb-16">
+        <div className="max-w-md lg:max-w-lg space-y-5 sm:space-y-6">
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-6 items-center">
-
-          {/* LEFT */}
-          <div className="space-y-8">
-
-            <motion.div
-              custom={0} initial="hidden" animate="visible" variants={fadeUp}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-moss/12 border border-moss/25"
-            >
-              <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />
-              <span className="text-xs font-semibold text-moss uppercase tracking-widest">
-                {t('hero.badge')}
-              </span>
-            </motion.div>
-
-            <motion.h1
-              custom={1} initial="hidden" animate="visible" variants={fadeUp}
-              className="text-5xl sm:text-6xl lg:text-[4.5rem] font-extrabold text-forest leading-[1.04] tracking-tight"
-            >
-              {t('hero.title1')}
-              <br />
-              <span className="text-moss">{t('hero.title2')}</span>
-              <br />
-              {t('hero.title3')}
-            </motion.h1>
-
-            <motion.p
-              custom={2} initial="hidden" animate="visible" variants={fadeUp}
-              className="text-lg text-forest/60 leading-relaxed max-w-[26rem]"
-            >
-              {t('hero.desc')}
-            </motion.p>
-
-            <motion.div
-              custom={3} initial="hidden" animate="visible" variants={fadeUp}
-              className="flex items-center gap-10"
-            >
-              {STATS.map(({ value, labelKey }) => (
-                <div key={labelKey} className="flex flex-col items-center">
-                  <span className="text-2xl font-extrabold text-forest">{value}</span>
-                  <span className="text-[0.68rem] text-forest/50 mt-0.5 text-center leading-snug max-w-[6rem]">
-                    {labelKey}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-
-            <motion.div
-              custom={4} initial="hidden" animate="visible" variants={fadeUp}
-              className="flex flex-wrap gap-4"
-            >
-              <button
-                onClick={() =>
-                  document.querySelector('#products')?.scrollIntoView({ behavior: 'smooth' })
-                }
-                className="group flex items-center gap-2 px-8 py-4 bg-moss text-forest rounded-full
-                           font-bold text-[0.95rem] hover:bg-mint transition-all duration-300
-                           hover:scale-105 hover:shadow-2xl hover:shadow-moss/30 active:scale-95"
-              >
-                {t('hero.shopNow')}
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </button>
-
-              <button
-                className="px-8 py-4 border-2 border-forest/20 text-forest rounded-full font-bold
-                           text-[0.95rem] hover:border-moss hover:bg-moss/8
-                           transition-all duration-300 active:scale-95"
-              >
-                {t('hero.quiz')}
-              </button>
-            </motion.div>
-
-            <motion.div
-              custom={5} initial="hidden" animate="visible" variants={fadeUp}
-              className="flex flex-wrap items-center gap-5 pt-1"
-            >
-              {BADGES.map(badge => (
-                <div key={badge} className="flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5 text-moss flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd" />
-                  </svg>
-                  <span className="text-xs font-medium text-forest/60">{badge}</span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* RIGHT – 3D Scene */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.82 }}
-            animate={{ opacity: 1,  scale: 1    }}
-            transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
-            className="relative flex items-center justify-center h-[480px] lg:h-[580px]"
+          {/* Heading */}
+          <motion.h1
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            className="text-[2.3rem] sm:text-5xl lg:text-[3.15rem] font-bold leading-[1.08] tracking-tight"
+            style={{ color: GREEN }}
           >
-            <div className="w-full h-full">
-              {lowPerformanceMode ? (
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-[280px] h-[280px] rounded-full bg-gradient-to-br from-moss/30 via-mint/20 to-sage/30 blur-2xl" />
-                </div>
-              ) : (
-                <CapsuleScene />
-              )}
-            </div>
+            {t('hero.title1')}{' '}
+            {t('hero.title2')}{' '}
+            {t('hero.title3')}
+          </motion.h1>
 
-            <motion.div
-              animate={lowPerformanceMode ? undefined : { y: [-6, 6, -6] }}
-              transition={lowPerformanceMode ? undefined : { duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-8 right-2 lg:right-0 bg-white/90 backdrop-blur-md
-                         rounded-2xl p-4 shadow-lg border border-forest/8 max-w-[150px]"
-            >
-              <p className="text-[0.65rem] text-forest/50 font-medium">{t('hero.survival')}</p>
-              <p className="text-[1.6rem] font-extrabold text-forest leading-none mt-0.5">100%</p>
-              <p className="text-[0.65rem] text-moss mt-1">{t('hero.reaches')}</p>
-            </motion.div>
+          {/* Description */}
+          <motion.p
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            className="text-[0.95rem] sm:text-base leading-relaxed"
+            style={{ color: `${GREEN}80` }}
+          >
+            {t('hero.desc')}
+          </motion.p>
 
-            <motion.div
-              animate={lowPerformanceMode ? undefined : { y: [6, -6, 6] }}
-              transition={lowPerformanceMode ? undefined : { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute bottom-16 left-0 lg:-left-6 bg-white/90 backdrop-blur-md
-                         rounded-2xl p-4 shadow-lg border border-forest/8 max-w-[170px]"
+          {/* Buttons */}
+          <motion.div
+            custom={2}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            className="flex items-center gap-6 pt-1"
+          >
+            <button
+              onClick={() => document.querySelector('#products')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200 active:scale-95"
+              style={{ backgroundColor: GREEN, color: '#f5f2ec' }}
             >
-              <p className="text-[0.65rem] text-forest/50 font-medium">Daily Synbiotic</p>
-              <p className="text-base font-extrabold text-forest mt-0.5">50B AFU</p>
-              <div className="flex gap-1 mt-2">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <div
-                    key={i}
-                    className="w-1.5 rounded-full bg-moss"
-                    style={{ height: 10 + i * 3, opacity: 0.35 + i * 0.13 }}
-                  />
-                ))}
-              </div>
-            </motion.div>
+              {t('hero.shopNow')}
+              <sup className="text-[0.55rem] ml-0.5">®</sup>
+            </button>
+
+            <button
+              className="flex items-center gap-1.5 text-sm font-medium pb-px transition-all duration-200"
+              style={{ color: GREEN, borderBottom: `1px solid ${GREEN}50` }}
+            >
+              {t('hero.quiz')}
+              <span className="text-base leading-none">→</span>
+            </button>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Right image — entrance + continuous float */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        initial={{ opacity: 0, scale: 1.04 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        className="hidden lg:block absolute right-0 top-0 bottom-0 w-[48%]"
       >
-        <span className="text-[0.6rem] text-forest/35 uppercase tracking-[0.2em]">Scroll</span>
+        <div className="absolute inset-0 pointer-events-none flex items-end justify-center pb-14">
+          <motion.div
+            animate={lowPerformanceMode ? undefined : { scaleX: [1.08, 0.78, 1.08], scaleY: [1.02, 0.82, 1.02], opacity: [0.38, 0.14, 0.38] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
+            className="w-[60%] h-12 rounded-full bg-[#1a3d18]/35 blur-[12px]"
+            style={{ willChange: 'transform, opacity' }}
+          />
+          <motion.div
+            animate={lowPerformanceMode ? undefined : { scaleX: [1, 0.8, 1], opacity: [0.28, 0.08, 0.28] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
+            className="absolute bottom-[2px] w-[42%] h-4 rounded-full bg-[#1a3d18]/20"
+            style={{ willChange: 'transform, opacity' }}
+          />
+        </div>
+
         <motion.div
-          animate={lowPerformanceMode ? undefined : { y: [0, 9, 0] }}
-          transition={lowPerformanceMode ? undefined : { duration: 1.6, repeat: Infinity }}
-          className="w-px h-8 bg-gradient-to-b from-moss/50 to-transparent rounded-full"
-        />
+          animate={lowPerformanceMode ? undefined : { y: [0, -16, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
+          className="w-full h-full"
+          style={{ willChange: 'transform' }}
+        >
+          <Image
+            src="/welcome-section.png"
+            alt="Daily Synbiotic"
+            fill
+            priority
+            className="object-contain object-center"
+          />
+        </motion.div>
       </motion.div>
     </section>
   )

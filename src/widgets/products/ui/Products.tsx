@@ -2,235 +2,145 @@
 
 import { useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
-import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
 import { useLang } from '@/shared/lib/i18n'
 
-// Prices in UZS
 const PRODUCTS = [
   {
-    id:          1,
-    name:        'Daily Synbiotic',
-    tagline:     'Complete gut health',
-    description: '50B AFU probiotic + prebiotic formula for comprehensive microbiome support.',
-    priceUZS:    149000,
-    badge:       'Хит продаж',
-    meta:        '24 strains',
-    bg:          ['#0A0A0A', '#1a1a1a'],
-    accent:      '#D4F7E8',
-    label:       'SYNBIOTIC',
+    id:       1,
+    name:     'Daily Synbiotic',
+    priceUZS: 149000,
+    badge:    'bestseller',
   },
   {
-    id:          2,
-    name:        'Daily Multivitamin',
-    tagline:     'Complete daily nutrition',
-    description: '25+ essential vitamins and minerals derived from real whole-food sources.',
-    priceUZS:    119000,
-    badge:       'Новинка',
-    meta:        '25+ nutrients',
-    bg:          ['#0d2a1a', '#1a4d2e'],
-    accent:      '#D4F7E8',
-    label:       'MULTI',
+    id:       2,
+    name:     'Daily Multivitamin',
+    priceUZS: 119000,
+    badge:    'new',
   },
   {
-    id:          3,
-    name:        'Energy + Focus',
-    tagline:     'Cognitive performance',
-    description: 'Nootropic adaptogens for sustained mental clarity without the crash.',
-    priceUZS:    139000,
-    badge:       'Популярный',
-    meta:        '12 adaptogens',
-    bg:          ['#1a0a0a', '#3a1515'],
-    accent:      '#FFD4D4',
-    label:       'FOCUS',
+    id:       3,
+    name:     'Energy + Focus',
+    priceUZS: 139000,
+    badge:    'new',
   },
   {
-    id:          4,
-    name:        'Sleep + Restore',
-    tagline:     'Deep recovery formula',
-    description: 'Magnesium, L-Theanine and calming botanicals for restful sleep.',
-    priceUZS:    129000,
-    badge:       'Любимый',
-    meta:        '8 botanicals',
-    bg:          ['#0a0a1a', '#151530'],
-    accent:      '#D4D4F7',
-    label:       'SLEEP',
+    id:       4,
+    name:     'Sleep + Restore',
+    priceUZS: 129000,
+    badge:    'new',
   },
 ]
 
-function BottleIllustration({
-  accent,
-  label,
-  index,
-  animateBottle,
-}: {
-  accent: string
-  label: string
-  index: number
-  animateBottle: boolean
-}) {
-  return (
-    <motion.div
-      animate={animateBottle ? { y: [-10, 10, -10] } : undefined}
-      transition={animateBottle ? { duration: 4.5 + index * 0.6, repeat: Infinity, ease: 'easeInOut' } : undefined}
-      className="relative w-28 h-40 mx-auto"
-    >
-      <div
-        className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-16 h-3 rounded-full blur-md opacity-30"
-        style={{ background: accent }}
-      />
-      <div
-        className="absolute inset-x-3 bottom-0 top-6 rounded-2xl"
-        style={{ background: `linear-gradient(180deg, ${accent}55 0%, ${accent}22 100%)`,
-                 border: `1px solid ${accent}44` }}
-      />
-      <div className="absolute inset-x-7 top-2 h-6 rounded-t-lg" style={{ background: `${accent}44` }} />
-      <div className="absolute inset-x-5 top-0 h-4 rounded-t-xl" style={{ background: `${accent}cc` }} />
-      <div
-        className="absolute inset-x-5 top-12 bottom-4 rounded-xl flex flex-col items-center justify-center gap-1"
-        style={{ background: `${accent}18` }}
-      >
-        <span className="text-[9px] font-black" style={{ color: accent }}>NUMA</span>
-        <div className="w-8 h-px" style={{ background: `${accent}55` }} />
-        <span className="text-[7px] font-semibold tracking-widest" style={{ color: `${accent}99` }}>
-          {label}
-        </span>
-      </div>
-      <div className="absolute left-5 top-8 w-1.5 bottom-5 rounded-full opacity-25" style={{ background: accent }} />
-      <div className="absolute inset-0 rounded-2xl blur-2xl opacity-20 group-hover:opacity-35 transition-opacity duration-500"
-           style={{ background: accent }} />
-    </motion.div>
-  )
-}
+const PRODUCT_IMAGES = ['/products/product-1.png', '/products/product-2.png'] as const
 
 function ProductCard({
   product,
   index,
-  lowPerformanceMode,
-  formattedPrice,
+  imageSrc,
   shopLabel,
-  perMonth,
+  formattedPrice,
 }: {
   product: (typeof PRODUCTS)[0]
   index: number
-  lowPerformanceMode: boolean
-  formattedPrice: string
+  imageSrc: string
   shopLabel: string
-  perMonth: string
+  formattedPrice: string
 }) {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <motion.div
+    <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 56 }}
+      initial={{ opacity: 0, y: 48 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.85, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={lowPerformanceMode ? undefined : { y: -10, transition: { duration: 0.3 } }}
-      className="group relative rounded-[1.6rem] overflow-hidden cursor-pointer"
-      style={{
-        background: `linear-gradient(145deg, ${product.bg[0]}, ${product.bg[1]})`,
-        boxShadow:  `0 4px 30px ${product.bg[0]}55`,
-      }}
+      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
+      className="group relative rounded-2xl bg-[#4C6F43] overflow-hidden flex flex-col"
     >
-      <div
-        className="pointer-events-none absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl opacity-20"
-        style={{ background: product.accent }}
-      />
-
-      <div className="relative z-10 p-6 flex flex-col h-full">
-        <div className="flex items-start justify-between mb-4">
-          <span
-            className="text-[0.65rem] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
-            style={{ background: `${product.accent}28`, color: product.accent }}
-          >
-            {product.badge}
+      {/* Badge */}
+      <div className="absolute top-4 left-4 z-10">
+        {product.badge === 'bestseller' ? (
+          <span className="text-[0.72rem] font-semibold text-[#1a3d18] bg-[#b8d96a] px-3 py-1 rounded-full">
+            Bestseller
           </span>
-          <span
-            className="text-[0.65rem] font-medium px-2.5 py-1 rounded-full"
-            style={{ background: `${product.accent}18`, color: product.accent }}
-          >
-            {product.meta}
+        ) : (
+          <span className="text-[0.72rem] font-semibold text-[#d8ecc8] bg-[#2e4a2c]/80 border border-[#5a7a52] px-3 py-1 rounded-full">
+            New
           </span>
-        </div>
+        )}
+      </div>
 
-        <div className="flex-1 flex items-center justify-center py-6">
-          <BottleIllustration
-            accent={product.accent}
-            label={product.label}
-            index={index}
-            animateBottle={!lowPerformanceMode}
+      <div className="flex flex-col flex-1 px-4 sm:px-5 pt-12 pb-5">
+        {/* Name */}
+        <h3 className="text-center text-[1.3rem] sm:text-[1.45rem] font-medium text-white leading-tight mb-4">
+          {product.name}
+        </h3>
+
+        {/* Image */}
+        <div className="flex-1 flex items-center justify-center py-3">
+          <Image
+            src={imageSrc}
+            alt={product.name}
+            width={200}
+            height={320}
+            className="w-[124px] sm:w-[140px] h-auto object-contain drop-shadow-[0_16px_24px_rgba(0,0,0,0.34)]
+                       group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-300"
           />
         </div>
 
-        <div className="space-y-2">
-          <div>
-            <h3 className="text-[1.15rem] font-extrabold" style={{ color: product.accent }}>
-              {product.name}
-            </h3>
-            <p className="text-[0.78rem] font-medium opacity-65" style={{ color: product.accent }}>
-              {product.tagline}
-            </p>
-          </div>
-
-          <p className="text-[0.72rem] leading-relaxed opacity-55" style={{ color: product.accent }}>
-            {product.description}
-          </p>
-
-          <div className="flex items-center justify-between pt-2">
-            <div>
-              <span className="text-[1.3rem] font-extrabold" style={{ color: product.accent }}>
-                {formattedPrice}
-              </span>
-              <span className="text-xs opacity-55 ml-1" style={{ color: product.accent }}>
-                {perMonth}
-              </span>
-            </div>
-
-            <motion.button
-              whileHover={lowPerformanceMode ? undefined : { scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-5 py-2.5 rounded-full text-sm font-bold transition-all"
-              style={{ background: product.accent, color: product.bg[0] }}
+        {/* Button */}
+        <div className="mt-4 text-center">
+          <motion.div whileTap={{ scale: 0.97 }} className="inline-block">
+            <Link
+              href="/catalog"
+              aria-label={shopLabel}
+              className="inline-flex items-center gap-2 px-7 py-2.5 rounded-full
+                         bg-[#1c3b1a] text-white text-[0.9rem] font-medium
+                         group-hover:bg-white group-hover:text-[#1c3b1a]
+                         transition-colors duration-250"
             >
-              {shopLabel} →
-            </motion.button>
-          </div>
+              {shopLabel}
+              <span className="opacity-0 -ml-1 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200">→</span>
+            </Link>
+          </motion.div>
+
+          <p className="mt-4 text-[#c0d8b4]/70 text-[0.82rem]">
+            {formattedPrice}
+          </p>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   )
 }
 
 export default function Products() {
   const headerRef = useRef<HTMLDivElement>(null)
   const inView    = useInView(headerRef, { once: true, margin: '-80px' })
-  const lowPerformanceMode = useLowPerformanceMode()
   const { lang, t } = useLang()
 
   const formatPrice = (p: number) =>
     p.toLocaleString('ru-RU') + ' ' + (lang === 'en' ? 'UZS' : lang === 'uz' ? 'so\'m' : 'сум')
 
   return (
-    <section id="products" className="py-24 lg:py-36 bg-beige">
-      <div className="max-w-7xl mx-auto px-6">
+    <section
+      id="products"
+      className="py-12 sm:py-14 lg:py-16 bg-[#1a3d18]"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <div ref={headerRef} className="text-center mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-moss text-sm font-semibold uppercase tracking-widest"
-          >
-            {t('products.label')}
-          </motion.span>
-
+        {/* Section header — 3-column layout */}
+        <div
+          ref={headerRef}
+          className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_auto] gap-5 lg:gap-8 items-end mb-9 sm:mb-10"
+        >
           <motion.h2
             initial={{ opacity: 0, y: 28 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-forest mt-3 leading-tight"
+            transition={{ duration: 0.8 }}
+            className="text-[2rem] sm:text-[2.6rem] lg:text-[3.1rem] font-bold text-white leading-[1.08]"
           >
             {t('products.title1')}
             <br />
@@ -240,42 +150,41 @@ export default function Products() {
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-4 text-forest/60 text-lg max-w-xl mx-auto"
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="text-[#c8dfc0]/80 text-sm sm:text-base max-w-sm leading-relaxed lg:pt-2"
           >
             {t('products.desc')}
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:self-end"
+          >
+            <Link
+              href="/catalog"
+              className="inline-flex items-center gap-1.5 text-white text-[0.9rem] font-semibold
+                         border-b border-white/50 hover:border-white pb-px transition-colors"
+            >
+              {t('products.viewAll')} →
+            </Link>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Cards grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
           {PRODUCTS.map((product, i) => (
             <ProductCard
               key={product.id}
               product={product}
               index={i}
-              lowPerformanceMode={lowPerformanceMode}
-              formattedPrice={formatPrice(product.priceUZS)}
+              imageSrc={PRODUCT_IMAGES[i % PRODUCT_IMAGES.length]}
               shopLabel={t('products.shop')}
-              perMonth={t('products.perMonth')}
+              formattedPrice={formatPrice(product.priceUZS)}
             />
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.75 }}
-          className="text-center mt-12"
-        >
-          <Link href="/catalog" className="group inline-flex items-center gap-2 text-forest font-semibold hover:text-moss transition-colors">
-            {t('products.viewAll')}
-            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        </motion.div>
       </div>
     </section>
   )

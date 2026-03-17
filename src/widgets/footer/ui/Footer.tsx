@@ -36,7 +36,7 @@ export default function Footer() {
   }
 
   return (
-    <footer ref={ref} className="bg-forest text-sage pt-20 pb-10 overflow-hidden">
+    <footer ref={ref} className="bg-[#1a3d18] text-sage pt-20 pb-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Brand statement */}

@@ -100,7 +100,7 @@ function OuterShell({ lowPerformanceMode }: { lowPerformanceMode: boolean }) {
       <mesh ref={ref}>
         <capsuleGeometry args={[0.62, 0.92, 4, lowPerformanceMode ? 16 : 28]} />
         <meshPhysicalMaterial
-          color="#3DDC84"
+          color="#1A4D13"
           transmission={0.78}
           roughness={0.04}
           metalness={0}
@@ -137,7 +137,7 @@ function OrbitingPills({ lowPerformanceMode }: { lowPerformanceMode: boolean }) 
         radius:  lowPerformanceMode ? 2 : 2.15,
         yOffset: Math.sin(i * 1.05) * 0.5,
         scale:   0.14 + (i % 3) * 0.03,
-        color:   i % 2 === 0 ? '#3DDC84' : '#D4F7E8',
+        color:   i % 2 === 0 ? '#1A4D13' : '#D4F7E8',
         rotX:    Math.random() * Math.PI,
         rotZ:    Math.random() * Math.PI,
       }))
@@ -169,8 +169,8 @@ function Scene({ lowPerformanceMode }: { lowPerformanceMode: boolean }) {
     <>
       <ambientLight intensity={0.65} color="#D4F7E8" />
       <directionalLight position={[5, 8, 4]}    intensity={1.8}  color="#ffffff" />
-      <directionalLight position={[-4, -2, -4]}  intensity={0.45} color="#3DDC84" />
-      <pointLight       position={[3, 2, 4]}     intensity={0.9}  color="#3DDC84" />
+      <directionalLight position={[-4, -2, -4]}  intensity={0.45} color="#1A4D13" />
+      <pointLight       position={[3, 2, 4]}     intensity={0.9}  color="#1A4D13" />
       <pointLight       position={[-3, -1, -3]}  intensity={0.35} color="#0A0A0A" />
 
       <Float speed={1.8} rotationIntensity={0.45} floatIntensity={0.7}>
