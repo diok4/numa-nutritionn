@@ -32,20 +32,20 @@ export default function BlogListPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#12311a]">
+    <div className="min-h-screen bg-[#e8efee]">
       <Navbar />
       <div className="relative overflow-hidden pt-24 sm:pt-28 pb-12 sm:pb-14 px-4 sm:px-6">
-        <div className="absolute -top-32 -right-20 h-72 w-72 rounded-full bg-[#3d7a51]/25 blur-3xl" />
-        <div className="absolute -bottom-24 -left-12 h-64 w-64 rounded-full bg-[#5da474]/20 blur-3xl" />
+        <div className="absolute -top-32 -right-20 h-72 w-72 rounded-full bg-[#53b2ad]/25 blur-3xl" />
+        <div className="absolute -bottom-24 -left-12 h-64 w-64 rounded-full bg-[#6fc7c2]/20 blur-3xl" />
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="rounded-[2rem] border border-white/20 bg-white/10 backdrop-blur-md p-5 sm:p-8">
-            <Link href="/" className="text-white/70 text-sm hover:text-white transition-colors mb-5 inline-block">
+          <div className="rounded-[2rem] border border-[#1f8b85]/15 bg-white/85 backdrop-blur-md p-5 sm:p-8">
+            <Link href="/" className="text-[#1f8b85]/70 text-sm hover:text-[#1f8b85] transition-colors mb-5 inline-block">
               ← {t('common.backHome')}
             </Link>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1f8b85] tracking-tight">
               {t('blog.title')}
             </h1>
-            <p className="text-white/80 mt-3 text-base sm:text-lg max-w-2xl leading-relaxed">
+            <p className="text-[#1f8b85]/75 mt-3 text-sm sm:text-base max-w-2xl leading-relaxed">
               {t('blog.subtitle')}
             </p>
             <div className="mt-8 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
@@ -53,10 +53,10 @@ export default function BlogListPage() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 border ${
+                    className={`shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 border ${
                     activeCategory === cat
-                      ? 'bg-white text-[#1a3d18] border-white'
-                      : 'bg-white/10 border-white/30 text-white/85 hover:bg-white/20'
+                      ? 'bg-[#1f8b85] text-white border-[#1f8b85]'
+                      : 'bg-[#1f8b85]/8 border-[#1f8b85]/20 text-[#1f8b85]/80 hover:bg-[#1f8b85]/14'
                   }`}
                 >
                   {cat}
@@ -105,14 +105,14 @@ export default function BlogListPage() {
                   </div>
                   <div className="p-6 sm:p-8 flex flex-col justify-between">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="text-xs text-[#1a3d18]/50">{formatDate(featured.date)}</span>
-                      <span className="w-1 h-1 rounded-full bg-[#1a3d18]/25" />
-                      <span className="text-xs text-[#1a3d18]/50">{featured.readTime} {t('blog.minRead')}</span>
+                      <span className="text-xs text-[#1f8b85]/50">{formatDate(featured.date)}</span>
+                      <span className="w-1 h-1 rounded-full bg-[#1f8b85]/25" />
+                      <span className="text-xs text-[#1f8b85]/50">{featured.readTime} {t('blog.minRead')}</span>
                     </div>
-                    <p className="text-[#1a3d18]/70 text-sm sm:text-base leading-relaxed line-clamp-4">
+                    <p className="text-[#1f8b85]/70 text-sm sm:text-base leading-relaxed line-clamp-4">
                       {getExcerpt(featured)}
                     </p>
-                    <div className="mt-6 flex items-center gap-1 text-[#1a3d18] text-sm font-bold group-hover:gap-2 transition-all">
+                    <div className="mt-6 flex items-center gap-1 text-[#1f8b85] text-sm font-bold group-hover:gap-2 transition-all">
                       {t('blog.readMore')}
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -155,15 +155,15 @@ export default function BlogListPage() {
                     </span>
                   </div>
                   <div className="p-5 sm:p-6">
-                    <h3 className="font-extrabold text-[1.05rem] sm:text-[1.15rem] text-[#1a3d18] leading-snug line-clamp-2">
+                    <h3 className="font-extrabold text-[1.05rem] sm:text-[1.15rem] text-[#1f8b85] leading-snug line-clamp-2">
                       {getTitle(post)}
                     </h3>
                     <div className="flex items-center gap-2.5 mt-3 mb-3">
-                      <span className="text-xs text-[#1a3d18]/50">{formatDate(post.date)}</span>
-                      <span className="w-1 h-1 rounded-full bg-[#1a3d18]/25" />
-                      <span className="text-xs text-[#1a3d18]/50">{post.readTime} {t('blog.minRead')}</span>
+                      <span className="text-xs text-[#1f8b85]/50">{formatDate(post.date)}</span>
+                      <span className="w-1 h-1 rounded-full bg-[#1f8b85]/25" />
+                      <span className="text-xs text-[#1f8b85]/50">{post.readTime} {t('blog.minRead')}</span>
                     </div>
-                    <p className="text-[#1a3d18]/65 text-sm leading-relaxed line-clamp-3">
+                    <p className="text-[#1f8b85]/65 text-sm leading-relaxed line-clamp-3">
                       {getExcerpt(post)}
                     </p>
                   </div>

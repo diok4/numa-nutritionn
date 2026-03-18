@@ -108,21 +108,21 @@ export default function CheckoutPage() {
 
   if (cart.length === 0 && !orderDone) {
     return (
-      <div className="min-h-screen bg-[#2c4a2a]">
+      <div className="min-h-screen bg-[#e8efee]">
         <Navbar />
         <main className="pt-28 sm:pt-32 pb-14 px-4 sm:px-6">
           <div className="max-w-3xl mx-auto bg-white rounded-3xl p-8 text-center shadow-sm">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1a3d18]">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1f8b85]">
               {lang === 'ru' ? 'Корзина пуста' : lang === 'uz' ? 'Savat bo\'sh' : 'Cart is empty'}
             </h1>
-            <p className="text-[#1a3d18]/60 mt-2">
+            <p className="text-[#1f8b85]/60 mt-2">
               {lang === 'ru'
                 ? 'Добавьте товары из каталога, чтобы перейти к оплате.'
                 : lang === 'uz'
                 ? 'To\'lovga o\'tish uchun katalogdan mahsulot qo\'shing.'
                 : 'Add products from catalog before checkout.'}
             </p>
-            <Link href="/catalog" className="inline-flex mt-6 px-6 py-3 rounded-full bg-[#1a3d18] text-white font-semibold hover:bg-[#1a3d18]/85">
+            <Link href="/catalog" className="inline-flex mt-6 px-6 py-3 rounded-full bg-[#1f8b85] text-white font-semibold hover:bg-[#1f8b85]/85">
               {backToCatalog}
             </Link>
           </div>
@@ -132,17 +132,17 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#2c4a2a]">
+    <div className="min-h-screen bg-[#e8efee]">
       <Navbar />
 
       <main className="pt-28 sm:pt-32 pb-14 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-3xl p-5 sm:p-8 shadow-sm mb-5">
-            <Link href="/cart" className="text-[#1a3d18]/50 hover:text-[#1a3d18] text-sm inline-block mb-4">
+            <Link href="/cart" className="text-[#1f8b85]/50 hover:text-[#1f8b85] text-sm inline-block mb-4">
               ← {backToCart}
             </Link>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1a3d18]">{title}</h1>
-            <p className="text-[#1a3d18]/60 mt-2">{subtitle}</p>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1f8b85]">{title}</h1>
+            <p className="text-[#1f8b85]/60 mt-2">{subtitle}</p>
           </div>
 
           {orderDone ? (
@@ -151,17 +151,17 @@ export default function CheckoutPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 180 }}
-                className="w-16 h-16 bg-[#1a3d18] rounded-full flex items-center justify-center mx-auto mb-5"
+                className="w-16 h-16 bg-[#1f8b85] rounded-full flex items-center justify-center mx-auto mb-5"
               >
                 <svg className="w-9 h-9 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
               </motion.div>
-              <h2 className="text-2xl font-extrabold text-[#1a3d18]">{successLabel}</h2>
-              <p className="text-[#1a3d18]/70 mt-2">{formatPrice(paidTotal, lang)}</p>
-              <p className="text-[#1a3d18]/50 mt-1">{paymentMethod.toUpperCase()}</p>
-              <p className="text-[#1a3d18]/55 mt-4">{successHint}</p>
-              <Link href="/catalog" className="inline-flex mt-7 px-7 py-3 rounded-full bg-[#1a3d18] text-white font-semibold hover:bg-[#1a3d18]/85">
+              <h2 className="text-2xl font-extrabold text-[#1f8b85]">{successLabel}</h2>
+              <p className="text-[#1f8b85]/70 mt-2">{formatPrice(paidTotal, lang)}</p>
+              <p className="text-[#1f8b85]/50 mt-1">{paymentMethod.toUpperCase()}</p>
+              <p className="text-[#1f8b85]/55 mt-4">{successHint}</p>
+              <Link href="/catalog" className="inline-flex mt-7 px-7 py-3 rounded-full bg-[#1f8b85] text-white font-semibold hover:bg-[#1f8b85]/85">
                 {backToCatalog}
               </Link>
             </div>
@@ -170,22 +170,22 @@ export default function CheckoutPage() {
               <form onSubmit={handlePay} className="bg-white rounded-3xl p-5 sm:p-6 space-y-5 shadow-sm">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="sm:col-span-2">
-                    <label className="text-xs font-semibold text-[#1a3d18]/60 mb-1 block">
+                    <label className="text-xs font-semibold text-[#1f8b85]/60 mb-1 block">
                       {lang === 'ru' ? 'Имя и фамилия' : lang === 'uz' ? 'Ism va familiya' : 'Full Name'}
                     </label>
                     <input
                       required value={form.name}
                       onChange={e => setForm(prev => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-xl bg-[#f5f2ec] border border-[#1a3d18]/15 text-[#1a3d18] placeholder:text-[#1a3d18]/35 focus:outline-none focus:border-[#1a3d18]/40"
+                      className="w-full px-4 py-3 rounded-xl bg-[#f5f2ec] border border-[#1f8b85]/15 text-[#1f8b85] placeholder:text-[#1f8b85]/35 focus:outline-none focus:border-[#1f8b85]/40"
                       placeholder={lang === 'ru' ? 'Иванов Иван' : lang === 'uz' ? 'Aliyev Aziz' : 'John Doe'}
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-semibold text-[#1a3d18]/60 mb-1 block">
+                    <label className="text-xs font-semibold text-[#1f8b85]/60 mb-1 block">
                       {lang === 'ru' ? 'Телефон' : lang === 'uz' ? 'Telefon' : 'Phone'}
                     </label>
-                    <div className="flex rounded-xl bg-[#f5f2ec] border border-[#1a3d18]/15 overflow-hidden focus-within:border-[#1a3d18]/40">
-                      <span className="px-3.5 py-3 text-[#1a3d18]/65 border-r border-[#1a3d18]/10 font-medium">+998</span>
+                    <div className="flex rounded-xl bg-[#f5f2ec] border border-[#1f8b85]/15 overflow-hidden focus-within:border-[#1f8b85]/40">
+                      <span className="px-3.5 py-3 text-[#1f8b85]/65 border-r border-[#1f8b85]/10 font-medium">+998</span>
                       <input
                         required
                         value={form.phoneLocal}
@@ -193,21 +193,21 @@ export default function CheckoutPage() {
                           const digits = e.target.value.replace(/\D/g, '').slice(0, 9)
                           setForm(prev => ({ ...prev, phoneLocal: digits }))
                         }}
-                        className="w-full px-3 py-3 bg-transparent text-[#1a3d18] placeholder:text-[#1a3d18]/35 focus:outline-none"
+                        className="w-full px-3 py-3 bg-transparent text-[#1f8b85] placeholder:text-[#1f8b85]/35 focus:outline-none"
                         placeholder={lang === 'ru' ? '90 000 00 00' : '90 000 00 00'}
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="text-xs font-semibold text-[#1a3d18]/60 mb-1 block">
+                    <label className="text-xs font-semibold text-[#1f8b85]/60 mb-1 block">
                       {cityLabel}
                     </label>
                     <select
                       required
                       value={form.city}
                       onChange={e => setForm(prev => ({ ...prev, city: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-xl bg-[#f5f2ec] border border-[#1a3d18]/15 text-[#1a3d18]
-                                 focus:outline-none focus:border-[#1a3d18]/40"
+                      className="w-full px-4 py-3 rounded-xl bg-[#f5f2ec] border border-[#1f8b85]/15 text-[#1f8b85]
+                                 focus:outline-none focus:border-[#1f8b85]/40"
                     >
                       <option value="" disabled>{cityPlaceholder}</option>
                       {CITIES.map(city => (
@@ -216,13 +216,13 @@ export default function CheckoutPage() {
                     </select>
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="text-xs font-semibold text-[#1a3d18]/60 mb-1 block">
+                    <label className="text-xs font-semibold text-[#1f8b85]/60 mb-1 block">
                       {lang === 'ru' ? 'Адрес доставки' : lang === 'uz' ? 'Yetkazib berish manzili' : 'Delivery Address'}
                     </label>
                     <input
                       required value={form.address}
                       onChange={e => setForm(prev => ({ ...prev, address: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-xl bg-[#f5f2ec] border border-[#1a3d18]/15 text-[#1a3d18] placeholder:text-[#1a3d18]/35 focus:outline-none focus:border-[#1a3d18]/40"
+                      className="w-full px-4 py-3 rounded-xl bg-[#f5f2ec] border border-[#1f8b85]/15 text-[#1f8b85] placeholder:text-[#1f8b85]/35 focus:outline-none focus:border-[#1f8b85]/40"
                       placeholder={lang === 'ru' ? 'ул. Амира Темура, д. 1, кв. 1' : lang === 'uz' ? 'Amir Temur ko\'chasi, 1-uy' : 'Amir Temur st., 1'}
                     />
                   </div>
@@ -230,7 +230,7 @@ export default function CheckoutPage() {
 
                 <button
                   type="submit" disabled={paying}
-                  className="w-full py-3.5 rounded-full bg-[#1a3d18] text-white font-bold hover:bg-[#1a3d18]/85
+                  className="w-full py-3.5 rounded-full bg-[#1f8b85] text-white font-bold hover:bg-[#1f8b85]/85
                              transition-colors disabled:opacity-65 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {paying ? (
@@ -247,7 +247,7 @@ export default function CheckoutPage() {
 
               <aside className="h-fit lg:sticky lg:top-28 bg-white rounded-3xl p-5 sm:p-6 shadow-sm">
                 <div>
-                  <label className="text-xs font-semibold text-[#1a3d18]/60 mb-2 block">{paymentLabel}</label>
+                  <label className="text-xs font-semibold text-[#1f8b85]/60 mb-2 block">{paymentLabel}</label>
                   <div className="space-y-2">
                     {paymentOptions.map(method => (
                       <button
@@ -256,8 +256,8 @@ export default function CheckoutPage() {
                         onClick={() => setPaymentMethod(method.key)}
                         className={`w-full rounded-xl border px-3.5 py-3 transition-colors ${
                           paymentMethod === method.key
-                            ? 'bg-[#1a3d18]/10 border-[#1a3d18] text-[#1a3d18]'
-                            : 'bg-[#f5f2ec] border-[#1a3d18]/15 text-[#1a3d18]/70 hover:text-[#1a3d18]'
+                            ? 'bg-[#1f8b85]/10 border-[#1f8b85] text-[#1f8b85]'
+                            : 'bg-[#f5f2ec] border-[#1f8b85]/15 text-[#1f8b85]/70 hover:text-[#1f8b85]'
                         }`}
                       >
                         <span className="flex items-center justify-between gap-3">
@@ -267,25 +267,25 @@ export default function CheckoutPage() {
                       </button>
                     ))}
                   </div>
-                  <p className="text-xs text-[#1a3d18]/55 mt-2.5">{paymentHint}</p>
+                  <p className="text-xs text-[#1f8b85]/55 mt-2.5">{paymentHint}</p>
                 </div>
 
-                <div className="border-t border-[#1a3d18]/10 mt-5 pt-5 text-xs uppercase tracking-[0.14em] text-[#1a3d18]/50">{orderSummary}</div>
+                <div className="border-t border-[#1f8b85]/10 mt-5 pt-5 text-xs uppercase tracking-[0.14em] text-[#1f8b85]/50">{orderSummary}</div>
                 <div className="space-y-3 mt-3">
                   {cart.map(({ product, qty }) => (
                     <div key={product.id} className="flex items-start justify-between gap-3">
-                      <div className="text-sm text-[#1a3d18]/80">
+                      <div className="text-sm text-[#1f8b85]/80">
                         {lang === 'ru' ? product.nameRu : lang === 'uz' ? product.nameUz : product.nameEn} × {qty}
                       </div>
-                      <div className="text-sm font-semibold text-[#1a3d18]">
+                      <div className="text-sm font-semibold text-[#1f8b85]">
                         {formatPrice(product.price * qty, lang)}
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="border-t border-[#1a3d18]/10 mt-4 pt-4 flex items-center justify-between">
-                  <span className="text-[#1a3d18]/60">{lang === 'ru' ? 'Итого' : lang === 'uz' ? 'Jami' : 'Total'}</span>
-                  <span className="text-2xl font-extrabold text-[#1a3d18]">{formatPrice(total, lang)}</span>
+                <div className="border-t border-[#1f8b85]/10 mt-4 pt-4 flex items-center justify-between">
+                  <span className="text-[#1f8b85]/60">{lang === 'ru' ? 'Итого' : lang === 'uz' ? 'Jami' : 'Total'}</span>
+                  <span className="text-2xl font-extrabold text-[#1f8b85]">{formatPrice(total, lang)}</span>
                 </div>
               </aside>
             </div>

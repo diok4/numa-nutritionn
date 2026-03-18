@@ -4,7 +4,7 @@ import { Footer } from '@/widgets/footer'
 
 export default function ContactsPage() {
   return (
-    <main className="min-h-screen bg-beige overflow-x-hidden">
+    <main className="min-h-screen bg-[#e8efee] overflow-x-hidden">
       <Navbar />
       <div className="pt-16 sm:pt-20">
         <Contacts />

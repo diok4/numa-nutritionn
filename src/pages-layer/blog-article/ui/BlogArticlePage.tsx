@@ -107,11 +107,11 @@ export default function BlogArticlePage({ slug }: { slug: string }) {
   const related = BLOG_POSTS.filter(p => p.slug !== slug && p.category === post.category).slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-[#12311a]">
+    <div className="min-h-screen bg-[#e8efee]">
       <Navbar />
       <div className="pt-24 sm:pt-28 pb-8 sm:pb-10 px-4 sm:px-6 relative overflow-hidden">
-        <div className="absolute -top-28 right-0 h-64 w-64 rounded-full bg-[#3d7a51]/30 blur-3xl" />
-        <div className="absolute -bottom-28 left-0 h-72 w-72 rounded-full bg-[#5da474]/18 blur-3xl" />
+        <div className="absolute -top-28 right-0 h-64 w-64 rounded-full bg-[#53b2ad]/30 blur-3xl" />
+        <div className="absolute -bottom-28 left-0 h-72 w-72 rounded-full bg-[#6fc7c2]/18 blur-3xl" />
         <div className="max-w-4xl mx-auto relative z-10">
           <div
             className="rounded-[2rem] overflow-hidden border border-white/20"
@@ -169,7 +169,7 @@ export default function BlogArticlePage({ slug }: { slug: string }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mt-6 sm:mt-8 p-6 sm:p-8 bg-[#0f2615] rounded-[2rem] text-center border border-white/12"
+          className="mt-6 sm:mt-8 p-6 sm:p-8 bg-[#1f8b85] rounded-[2rem] text-center border border-white/12"
         >
           <h3 className="text-2xl font-extrabold text-white mb-3">
             {lang === 'ru' ? 'Попробуйте NUMA Nutrition' :
@@ -183,7 +183,7 @@ export default function BlogArticlePage({ slug }: { slug: string }) {
           </p>
           <Link
             href="/catalog"
-            className="inline-block px-8 py-3.5 bg-white text-[#1a3d18] rounded-full font-bold
+            className="inline-block px-8 py-3.5 bg-white text-[#1f8b85] rounded-full font-bold
                        hover:bg-white/90 transition-all hover:scale-105 active:scale-95"
           >
             {t('nav.catalog')} →
@@ -192,7 +192,7 @@ export default function BlogArticlePage({ slug }: { slug: string }) {
 
         {related.length > 0 && (
           <div className="mt-10 sm:mt-12">
-            <h2 className="text-2xl font-extrabold text-white mb-5 sm:mb-6">
+            <h2 className="text-2xl font-extrabold text-[#1f8b85] mb-5 sm:mb-6">
               {lang === 'ru' ? 'Похожие статьи' : lang === 'uz' ? 'O\'xshash maqolalar' : 'Related Articles'}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
@@ -204,7 +204,7 @@ export default function BlogArticlePage({ slug }: { slug: string }) {
                     <div className="h-28"
                          style={{ background: `linear-gradient(135deg, ${p.gradient[0]}, ${p.gradient[1]})` }} />
                     <div className="p-4">
-                      <p className="text-sm font-bold text-[#1a3d18] group-hover:text-[#255f2a] transition-colors line-clamp-2">
+                      <p className="text-sm font-bold text-[#1f8b85] group-hover:text-[#176b67] transition-colors line-clamp-2">
                         {relTitle}
                       </p>
                     </div>

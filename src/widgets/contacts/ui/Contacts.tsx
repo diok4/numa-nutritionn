@@ -23,12 +23,12 @@ export default function Contacts() {
   }
 
   return (
-    <section id="contact" className="py-14 sm:py-16 lg:py-20 bg-[#f5f2ec]">
+    <section id="contact" className="py-12 sm:py-14 lg:py-16 bg-[#e8efee]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="mb-8 sm:mb-10">
-          <p className="text-[#1c3a13]/70 text-sm font-semibold tracking-wide">— {copy.section}</p>
-          <h2 className="mt-3 text-[2.2rem] sm:text-5xl font-extrabold text-[#1c3a13] leading-[1.05]">{copy.title}</h2>
-          <p className="mt-3 text-[#1c3a13]/65 text-base sm:text-lg">{copy.subtitle}</p>
+          <p className="text-[#1f8b85]/70 text-sm font-semibold tracking-wide">— {copy.section}</p>
+          <h2 className="mt-3 text-[2.2rem] sm:text-5xl font-extrabold text-[#1f8b85] leading-[1.05]">{copy.title}</h2>
+          <p className="mt-3 text-[#1f8b85]/65 text-base sm:text-lg">{copy.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -55,13 +55,13 @@ export default function Contacts() {
         </div>
 
         <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-4 sm:gap-5">
-          <div className="rounded-3xl border border-[#1c3a13]/12 bg-white p-5 sm:p-6">
-            <h3 className="text-2xl sm:text-4xl font-extrabold text-[#1c3a13] leading-tight">
+          <div className="rounded-3xl border border-[#1f8b85]/12 bg-white p-5 sm:p-6">
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-[#1f8b85] leading-tight">
               NUMA
               <br />
               Nutrition
             </h3>
-            <p className="mt-4 text-[#1c3a13]/70 leading-relaxed">
+            <p className="mt-4 text-[#1f8b85]/70 leading-relaxed">
               {lang === 'ru'
                 ? 'Поддержка клиентов, консультации по продуктам и партнёрские запросы.'
                 : lang === 'uz'
@@ -70,37 +70,37 @@ export default function Contacts() {
             </p>
           </div>
 
-          <form className="rounded-3xl border border-[#1c3a13]/12 bg-white p-5 sm:p-6">
-            <h3 className="text-2xl sm:text-4xl font-extrabold text-[#1c3a13] mb-5">{copy.formTitle}</h3>
+          <form className="rounded-3xl border border-[#1f8b85]/12 bg-white p-5 sm:p-6">
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-[#1f8b85] mb-5">{copy.formTitle}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <input
                 type="text"
                 placeholder={copy.namePh}
-                className="h-12 rounded-2xl px-4 border border-[#1c3a13]/14 bg-[#f5f2ec] text-[#1c3a13] placeholder:text-[#1c3a13]/45 focus:outline-none focus:border-[#1c3a13]/35"
+                className="h-12 rounded-2xl px-4 border border-[#1f8b85]/14 bg-[#f5f2ec] text-[#1f8b85] placeholder:text-[#1f8b85]/45 focus:outline-none focus:border-[#1f8b85]/35"
               />
               <input
                 type="email"
                 placeholder={copy.emailPh}
-                className="h-12 rounded-2xl px-4 border border-[#1c3a13]/14 bg-[#f5f2ec] text-[#1c3a13] placeholder:text-[#1c3a13]/45 focus:outline-none focus:border-[#1c3a13]/35"
+                className="h-12 rounded-2xl px-4 border border-[#1f8b85]/14 bg-[#f5f2ec] text-[#1f8b85] placeholder:text-[#1f8b85]/45 focus:outline-none focus:border-[#1f8b85]/35"
               />
             </div>
             <textarea
               rows={5}
               placeholder={copy.msgPh}
-              className="mt-3 w-full rounded-2xl px-4 py-3 border border-[#1c3a13]/14 bg-[#f5f2ec] text-[#1c3a13] placeholder:text-[#1c3a13]/45 focus:outline-none focus:border-[#1c3a13]/35 resize-none"
+              className="mt-3 w-full rounded-2xl px-4 py-3 border border-[#1f8b85]/14 bg-[#f5f2ec] text-[#1f8b85] placeholder:text-[#1f8b85]/45 focus:outline-none focus:border-[#1f8b85]/35 resize-none"
             />
             <button
               type="button"
-              className="mt-4 h-12 w-full rounded-full bg-[#1c3a13] text-white font-semibold hover:bg-[#16300f] transition-colors"
+              className="mt-4 h-12 w-full rounded-full bg-[#1f8b85] text-white font-semibold hover:bg-[#176b67] transition-colors"
             >
               {copy.send}
             </button>
           </form>
         </div>
 
-        <div className="mt-4 sm:mt-5 rounded-3xl border border-[#1c3a13]/12 bg-white p-3 sm:p-4">
-          <p className="px-1 pb-3 text-sm font-semibold text-[#1c3a13]/70">{copy.mapTitle}</p>
-          <div className="overflow-hidden rounded-2xl border border-[#1c3a13]/12">
+        <div className="mt-4 sm:mt-5 rounded-3xl border border-[#1f8b85]/12 bg-white p-3 sm:p-4">
+          <p className="px-1 pb-3 text-sm font-semibold text-[#1f8b85]/70">{copy.mapTitle}</p>
+          <div className="overflow-hidden rounded-2xl border border-[#1f8b85]/12">
             <iframe
               title="Yandex Map"
               src="https://yandex.uz/map-widget/v1/?ll=69.286531%2C41.315806&mode=search&text=%D0%A2%D0%B0%D1%88%D0%BA%D0%B5%D0%BD%D1%82%2C%20%D0%AD%D0%BB%D1%8C%D0%B1%D0%B5%D0%BA%20%D0%BA%D1%9E%D1%87%D0%B0%D1%81%D0%B8%2031&z=15"
@@ -119,10 +119,10 @@ export default function Contacts() {
 
 function ContactCard({ label, value, icon }: { label: string; value: string; icon: ReactNode }) {
   return (
-    <div className="rounded-3xl border border-[#1c3a13]/12 bg-white p-5 sm:p-6">
-      <div className="w-10 h-10 rounded-xl bg-[#1c3a13]/10 text-[#1c3a13] flex items-center justify-center">{icon}</div>
-      <p className="mt-4 text-sm uppercase tracking-wide text-[#1c3a13]/55 font-semibold">{label}</p>
-      <p className="mt-2 text-[1.08rem] text-[#1c3a13] leading-snug">{value}</p>
+    <div className="rounded-3xl border border-[#1f8b85]/12 bg-white p-5 sm:p-6">
+      <div className="w-10 h-10 rounded-xl bg-[#1f8b85]/10 text-[#1f8b85] flex items-center justify-center">{icon}</div>
+      <p className="mt-4 text-sm uppercase tracking-wide text-[#1f8b85]/55 font-semibold">{label}</p>
+      <p className="mt-2 text-[1.08rem] text-[#1f8b85] leading-snug">{value}</p>
     </div>
   )
 }

@@ -214,7 +214,7 @@ export default function CatalogPage() {
   const addedLabel = lang === 'ru' ? 'Добавлено' : lang === 'uz' ? 'Qo‘shildi' : 'Added'
 
   return (
-    <div className="min-h-screen bg-[#2c4a2a]">
+    <div className="min-h-screen bg-[#e8efee]">
       <Navbar />
 
 
@@ -223,11 +223,11 @@ export default function CatalogPage() {
           <div className="bg-white rounded-3xl p-5 sm:p-8 lg:p-10 shadow-sm">
             <div>
               <div>
-                <Link href="/" className="text-[#1a3d18]/50 text-sm hover:text-[#1a3d18] transition-colors mb-4 inline-block">
+                <Link href="/" className="text-[#1f8b85]/50 text-sm hover:text-[#1f8b85] transition-colors mb-4 inline-block">
                   ← {t('common.backHome')}
                 </Link>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1a3d18]">{t('catalog.title')}</h1>
-                <p className="text-[#1a3d18]/60 mt-2 text-base sm:text-lg">{t('catalog.subtitle')}</p>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1f8b85]">{t('catalog.title')}</h1>
+                <p className="text-[#1f8b85]/60 mt-2 text-base sm:text-lg">{t('catalog.subtitle')}</p>
               </div>
             </div>
 
@@ -238,8 +238,8 @@ export default function CatalogPage() {
                   onClick={() => setCategory(key)}
                   className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                     category === key
-                      ? 'bg-[#1a3d18] text-white'
-                      : 'bg-[#1a3d18]/8 border border-[#1a3d18]/15 text-[#1a3d18]/70 hover:bg-[#1a3d18]/15 hover:text-[#1a3d18]'
+                      ? 'bg-[#1f8b85] text-white'
+                      : 'bg-[#1f8b85]/8 border border-[#1f8b85]/15 text-[#1f8b85]/70 hover:bg-[#1f8b85]/15 hover:text-[#1f8b85]'
                   }`}
                 >
                   {t(labelKey as Parameters<typeof t>[0])}
@@ -267,10 +267,10 @@ export default function CatalogPage() {
                 >
                   <div className="p-5 sm:p-6 flex flex-col min-h-[340px]">
                     <div className="flex items-start justify-between mb-4 gap-2">
-                      <span className="text-[0.68rem] font-bold uppercase tracking-[0.1em] px-3 py-1.5 rounded-full bg-[#1a3d18]/10 text-[#1a3d18]">
+                      <span className="text-[0.68rem] font-bold uppercase tracking-[0.1em] px-3 py-1.5 rounded-full bg-[#1f8b85]/10 text-[#1f8b85]">
                         {product.badge}
                       </span>
-                      <span className="text-[0.66rem] px-2.5 py-1 rounded-full bg-[#1a3d18]/8 text-[#1a3d18]/70">
+                      <span className="text-[0.66rem] px-2.5 py-1 rounded-full bg-[#1f8b85]/8 text-[#1f8b85]/70">
                         {product.meta}
                       </span>
                     </div>
@@ -285,16 +285,16 @@ export default function CatalogPage() {
                     </div>
 
                     <div className="space-y-2.5 mt-4">
-                      <h3 className="text-[1.05rem] sm:text-[1.15rem] font-extrabold text-[#1a3d18]">
+                      <h3 className="text-[1.05rem] sm:text-[1.15rem] font-extrabold text-[#1f8b85]">
                         {getName(product)}
                       </h3>
-                      <p className="text-[0.76rem] leading-relaxed text-[#1a3d18]/60">
+                      <p className="text-[0.76rem] leading-relaxed text-[#1f8b85]/60">
                         {getDesc(product)}
                       </p>
 
                       <div className="flex items-center justify-between pt-2 gap-3">
                         <div>
-                          <div className="text-[1.15rem] font-extrabold text-[#1a3d18]">
+                          <div className="text-[1.15rem] font-extrabold text-[#1f8b85]">
                             {formatPrice(product.price, lang)}
                           </div>
                         </div>
@@ -305,8 +305,8 @@ export default function CatalogPage() {
                               onClick={() => (qty > 0 ? removeItem(product.id) : addItem(product))}
                               className={`px-4 py-2 rounded-full text-[0.78rem] font-bold border transition-all active:scale-95 ${
                                 qty > 0
-                                  ? 'bg-white text-[#1a3d18] border-[#1a3d18]/20 hover:bg-[#f5f2ec]'
-                                  : 'bg-[#1a3d18] text-white border-[#1a3d18] hover:bg-[#1a3d18]/85'
+                                  ? 'bg-white text-[#1f8b85] border-[#1f8b85]/20 hover:bg-[#f5f2ec]'
+                                  : 'bg-[#1f8b85] text-white border-[#1f8b85] hover:bg-[#1f8b85]/85'
                               }`}
                             >
                               {qty > 0 ? `✓ ${addedLabel}` : t('catalog.addToCart')}

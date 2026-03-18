@@ -3,111 +3,111 @@
 import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
-import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
 import { useLang } from '@/shared/lib/i18n'
+
+import img7 from '../../../../assets/img7.png'
+import imageBg from '../../../../assets/image.png'
 
 export default function Bundle() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
-  const lowPerformanceMode = useLowPerformanceMode()
-  const { lang, t } = useLang()
-
-  const TRUST = lang === 'ru'
-    ? ['30 дней — возврат денег', 'Подписка со скидкой', 'Доставка по Узбекистану', 'Разработано врачами']
-    : lang === 'uz'
-    ? ['30 kunlik pul qaytarish', 'Obuna va tejash', 'O\'zbekiston bo\'ylab yetkazish', 'Shifokorlar tomonidan yaratilgan']
-    : ['30-day money back guarantee', 'Subscribe & save', 'Delivery across Uzbekistan', 'Doctor formulated']
+  const { lang } = useLang()
 
   return (
-    <section ref={ref} className="py-14 sm:py-16 lg:py-20 bg-beige overflow-hidden">
-      <div className="w-full">
+    <section ref={ref} id="science-capsule" className="py-14 sm:py-20 lg:py-24 bg-white overflow-hidden relative">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#6f89a8]">
+        <Image
+          src={imageBg}
+          alt="Science background"
+          fill
+          className="object-cover object-center opacity-100"
+        />
+        <div className="absolute inset-0 bg-[#0a1510]/22" />
+      </div>
+
+      <div className="relative z-10 px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 36 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full overflow-hidden shadow-[0_35px_80px_rgba(5,12,8,0.32)]"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto w-full max-w-[1430px] min-h-[430px] lg:min-h-[550px] rounded-[2rem] sm:rounded-[2.25rem] overflow-hidden
+                     bg-white/[0.09] backdrop-blur-[10px]
+                     flex flex-col lg:flex-row relative"
         >
-          <Image
-            src="/products/bundle-glass-bg.png"
-            alt=""
-            fill
-            aria-hidden={true}
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-[#030906]/62" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#020704]/82 via-[#04130a]/62 to-[#030906]/70" />
-          <div className="absolute top-0 right-[20%] w-[520px] h-[520px] rounded-full bg-moss/15 blur-[120px]" />
-          <div className="absolute bottom-[-120px] left-[12%] w-[420px] h-[420px] rounded-full bg-sage/10 blur-[110px]" />
+          {/* Left Text Content */}
+          <div className="flex-1 px-8 py-10 sm:px-10 sm:py-12 lg:px-[76px] lg:py-[64px] flex flex-col justify-center relative z-10">
+            <div className="max-w-[620px] mb-auto">
+              <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3.05rem] font-extralight text-white/95 leading-[1.2] mb-10">
+                {lang === 'ru' ? (
+                  <>
+                    Большинство пробиотиков не <br />
+                    выживают при пищеварении. <br />
+                    <span className="font-light opacity-90">DS-01® — выживает</span>
+                  </>
+                ) : (
+                  <>
+                    Most probiotics don't <br />
+                    survive digestion. <br />
+                    <span className="font-light opacity-90">DS-01® survives</span>
+                  </>
+                )}
+              </h2>
+            </div>
 
-          <div className="relative z-10">
-            <div className="border-y border-white/20 bg-white/[0.08] backdrop-blur-[16px]">
-              <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-7 lg:gap-4 px-5 sm:px-8 lg:px-10 py-8 lg:py-10">
-                {/* Left */}
-                <div className="flex flex-col justify-center">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 border border-white/25 w-fit mb-6">
-                    <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />
-                    <span className="text-[0.75rem] text-white font-semibold uppercase tracking-[0.08em]">{t('bundle.badge')}</span>
-                  </div>
-
-                  <h3 className="text-[2rem] sm:text-[2.5rem] lg:text-[3.2rem] font-black text-white leading-[1.04] mb-5">
-                    <span className="inline bg-white/10 text-white px-2 py-1">{t('bundle.nameFull')}</span>
-                    <br />
-                    <span className="inline bg-white/14 text-white px-2 py-1">{t('bundle.nameGreen')}</span>
-                  </h3>
-
-                  <p className="text-white text-[1rem] sm:text-[1.05rem] leading-relaxed mb-6 max-w-[34rem]">{t('bundle.desc')}</p>
-
-                  <div className="mb-7">
-                    <div className="text-white/45 text-[1.35rem] sm:text-[1.5rem] line-through leading-none">
-                      {lang === 'ru' ? '267 900 сум/мес' : lang === 'uz' ? '267 900 so\'m/oy' : '267,900 UZS/mo'}
-                    </div>
-                    <div className="text-[2.9rem] sm:text-[3.7rem] font-black text-white leading-[0.95] mt-1">
-                      {lang === 'ru' ? '217 000' : lang === 'uz' ? '217 000' : '217,000'}
-                      <span className="text-[1.6rem] sm:text-[2rem] ml-2 text-white">{lang === 'ru' ? 'сум' : lang === 'uz' ? 'so\'m' : 'UZS'}</span>
-                    </div>
-                  </div>
-
-                  <motion.button
-                    whileHover={lowPerformanceMode ? undefined : { scale: 1.03, boxShadow: '0 24px 45px rgba(175,214,196,0.20)' }}
-                    whileTap={{ scale: 0.97 }}
-                    className="px-10 py-3.5 bg-white/12 border border-white/50 text-white rounded-full font-black text-[1.3rem] sm:text-[1.5rem] w-fit hover:bg-white/20 transition-all duration-300"
-                  >
-                    {t('bundle.cta')}
-                  </motion.button>
+            {/* Stats Card */}
+            <div className="mt-8">
+              <div className="inline-flex min-w-[360px] sm:min-w-[420px] items-center justify-between gap-8 sm:gap-12 px-6 py-6 sm:px-10 sm:py-8 rounded-[1.9rem] bg-white/[0.06] backdrop-blur-[8px]">
+                <div className="text-white/80 text-[1rem] sm:text-[1.12rem] leading-[1.45] max-w-[220px]">
+                  {lang === 'ru' ? '10x эффективнее обычных аналогов.' : '10x more effective than common analogues.'}
                 </div>
-
-                {/* Right */}
-                <div className="relative flex items-center justify-center min-h-[320px] lg:min-h-[470px]">
-                  <div className="absolute w-[360px] h-[360px] rounded-full bg-sage/8 blur-[90px]" />
-                  <div className="absolute w-[280px] h-[280px] rounded-full bg-moss/15 blur-[70px] right-8 bottom-16" />
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 22, scale: 0.96 }}
-                    animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                    transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative z-20 w-full max-w-[320px] sm:max-w-[360px]"
-                  >
-                    <Image
-                      src="/products/small-1.png"
-                      alt="Detox duo"
-                      width={310}
-                      height={397}
-                      className="w-full h-auto object-contain drop-shadow-[0_30px_45px_rgba(0,0,0,0.45)] rounded-3xl"
-                    />
-                  </motion.div>
-                </div>
-              </div>
-
-              <div className="px-5 sm:px-8 lg:px-10 pb-6">
-                <div className="flex flex-wrap items-center gap-3.5">
-                  {TRUST.map(item => (
-                    <span key={item} className="px-4 py-2 rounded-full border border-white/28 bg-white/[0.08] text-white text-sm">
-                      {item}
-                    </span>
-                  ))}
+                <div className="text-5xl sm:text-[4rem] font-light text-white tracking-tight">
+                  10x
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Center Capsule Showcase */}
+          <div className="flex-[1.1] relative flex items-center justify-center p-8 lg:p-0">
+            {/* Outer Capsule Label */}
+            <div className="absolute top-[18%] left-[2%] z-20 max-w-[210px] hidden xl:block">
+              <div className="text-[0.65rem] font-bold text-white uppercase tracking-[0.2em] mb-3">
+                Outer Capsule
+              </div>
+              <p className="text-[0.75rem] text-white/70 leading-[1.45] font-light">
+                Shields probiotics from stomach acid in the digestive tract, while delivering prebiotics to stimulate the growth of beneficial bacteria.
+              </p>
+              {/* Dotted Line */}
+              <div className="absolute top-[10%] left-[105%] w-[130px] h-[1px] border-t border-dashed border-white/30 pointer-events-none" />
+            </div>
+
+            {/* Inner Capsule Label */}
+            <div className="absolute bottom-[13%] right-[4%] z-20 max-w-[200px] hidden xl:block">
+              {/* Dotted Line */}
+              <div className="absolute bottom-[20%] right-[105%] w-[125px] h-[1px] border-t border-dashed border-white/30 pointer-events-none" />
+              <div className="text-[0.65rem] font-bold text-white uppercase tracking-[0.2em] mb-3">
+                Inner Capsule
+              </div>
+              <p className="text-[0.75rem] text-white/70 leading-[1.45] font-light">
+                Delivers 24 live strains of probiotics to the colon, where they're needed most.
+              </p>
+            </div>
+
+            {/* Capsule Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-[260px] sm:w-[320px] lg:w-[370px] flex items-center justify-center"
+            >
+              <Image
+                src={img7}
+                alt="Science Capsule"
+                className="w-full h-auto drop-shadow-[0_40px_100px_rgba(0,0,0,0.6)]"
+              />
+              {/* Complex Glow Effects removed/refined to match clean mockup */}
+            </motion.div>
           </div>
         </motion.div>
       </div>

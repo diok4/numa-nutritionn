@@ -15,16 +15,16 @@ export const translations = {
 
   // ── Hero ──
   'hero.badge':     { ru: 'Формула с научным обоснованием', uz: 'Ilmiy asoslangan formula', en: 'Science-Backed Formula' },
-  'hero.title1':    { ru: 'Здоровый кишечник',              uz: 'Sog\'lom ichak',           en: 'A healthy gut'         },
-  'hero.title2':    { ru: 'может изменить',                 uz: 'o\'zgartira oladi',        en: 'can change'            },
-  'hero.title3':    { ru: 'вашу жизнь.',                    uz: 'hayotingizni.',            en: 'your life.'            },
+  'hero.title1':    { ru: 'Здоровый кишечник — фундамент',  uz: 'Sog\'lom ichak',           en: 'A healthy gut'         },
+  'hero.title2':    { ru: 'вашей',                          uz: 'o\'zgartira oladi',        en: 'can change'            },
+  'hero.title3':    { ru: 'жизни.',                         uz: 'hayotingizni.',            en: 'your life.'            },
   'hero.desc':      {
-    ru: 'Микробиом — основа вашего здоровья. Наша формула доставляет 50 млрд КОЕ клинически изученных пробиотических штаммов — прямо туда, где они работают.',
+    ru: 'Наша миссия — создавать научно обоснованные решения для поддержки вашего пищеварения, энергии и долголетия.',
     uz: 'Mikrobiom — salomatliqingiz asosi. Formulamiz klinik jihatdan o\'rganilgan 50 milliard KOU probiotik shtammini to\'g\'ri joyiga yetkazadi.',
     en: 'Your microbiome is the foundation of your health. Our precision synbiotic formula delivers 50B AFU of clinically-studied probiotic strains — right where it counts.',
   },
   'hero.shopNow':   { ru: 'Купить сейчас', uz: 'Hozir sotib olish', en: 'Shop Now'      },
-  'hero.quiz':      { ru: 'Пройти тест',   uz: 'Test o\'tish',      en: 'Take the Quiz' },
+  'hero.quiz':      { ru: 'Посмотреть Рецепты', uz: 'Test o\'tish', en: 'Take the Quiz' },
   'hero.survival':  { ru: 'Выживаемость',  uz: 'Omon qolish',       en: 'Survival Rate' },
   'hero.reaches':   { ru: 'Достигает кишечника', uz: 'Ichakka yetadi', en: 'Reaches your gut' },
 

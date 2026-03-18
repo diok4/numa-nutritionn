@@ -2,11 +2,12 @@
 
 import { useRef } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useLang } from '@/shared/lib/i18n'
 import { useLowPerformanceMode } from '@/shared/lib/useLowPerformanceMode'
+import threeBottlesImage from '../../../../assets/img14.png'
 
-const GREEN = '#1a3d18'
+const GREEN = '#1f4a25'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -21,15 +22,17 @@ export default function Hero() {
   const containerRef = useRef<HTMLElement>(null)
   const { t } = useLang()
   const lowPerformanceMode = useLowPerformanceMode()
+  const reducedMotion = useReducedMotion()
+  const canAnimate = !lowPerformanceMode && !reducedMotion
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[92svh] lg:min-h-screen flex items-stretch overflow-hidden bg-[#f5f2ec]"
+      className="relative min-h-[92svh] lg:min-h-screen flex items-stretch overflow-hidden bg-[#efefea]"
     >
       {/* Left content column */}
-      <div className="relative z-10 flex items-center w-full lg:w-[52%] px-6 sm:px-10 lg:px-16 pt-24 sm:pt-28 lg:pt-28 pb-14 sm:pb-16">
-        <div className="max-w-md lg:max-w-lg space-y-5 sm:space-y-6">
+      <div className="relative z-10 flex items-center w-full lg:w-[56%] px-6 sm:px-10 lg:px-12 xl:px-16 pt-24 sm:pt-28 lg:pt-28 pb-14 sm:pb-16">
+        <div className="max-w-[940px] space-y-6 sm:space-y-7">
 
           {/* Heading */}
           <motion.h1
@@ -37,7 +40,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="text-[2.3rem] sm:text-5xl lg:text-[3.15rem] font-bold leading-[1.08] tracking-tight"
+            className="text-[2rem] sm:text-[2.55rem] lg:text-[3.75rem] font-medium leading-[1.06] tracking-[-0.02em]"
             style={{ color: GREEN }}
           >
             {t('hero.title1')}{' '}
@@ -51,8 +54,8 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="text-[0.95rem] sm:text-base leading-relaxed"
-            style={{ color: `${GREEN}80` }}
+            className="max-w-[560px] text-[0.96rem] sm:text-[1.06rem] lg:text-[1.5rem] leading-[1.42]"
+            style={{ color: '#2d4f30' }}
           >
             {t('hero.desc')}
           </motion.p>
@@ -63,20 +66,19 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="flex items-center gap-6 pt-1"
+            className="flex items-center gap-5 pt-1"
           >
             <button
               onClick={() => document.querySelector('#products')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200 active:scale-95"
-              style={{ backgroundColor: GREEN, color: '#f5f2ec' }}
+              className="px-6 py-3 rounded-full font-medium text-[0.95rem] transition-all duration-200 active:scale-95"
+              style={{ backgroundColor: '#174915', color: '#f3f3ee' }}
             >
               {t('hero.shopNow')}
-              <sup className="text-[0.55rem] ml-0.5">®</sup>
             </button>
 
             <button
-              className="flex items-center gap-1.5 text-sm font-medium pb-px transition-all duration-200"
-              style={{ color: GREEN, borderBottom: `1px solid ${GREEN}50` }}
+              className="flex items-center gap-1.5 text-[0.95rem] font-normal pb-0.5 transition-all duration-200"
+              style={{ color: '#365c39', borderBottom: '1px solid #365c39' }}
             >
               {t('hero.quiz')}
               <span className="text-base leading-none">→</span>
@@ -85,42 +87,37 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Right image — entrance + continuous float */}
+      {/* Right image */}
       <motion.div
         initial={{ opacity: 0, scale: 1.04 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-        className="hidden lg:block absolute right-0 top-0 bottom-0 w-[48%]"
+        className="hidden lg:flex absolute right-0 top-0 bottom-0 w-[43%] items-center justify-center pr-8 xl:pr-12"
       >
-        <div className="absolute inset-0 pointer-events-none flex items-end justify-center pb-14">
+        <div className="relative w-[min(410px,64%)] aspect-[335/465]">
           <motion.div
-            animate={lowPerformanceMode ? undefined : { scaleX: [1.08, 0.78, 1.08], scaleY: [1.02, 0.82, 1.02], opacity: [0.38, 0.14, 0.38] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
-            className="w-[60%] h-12 rounded-full bg-[#1a3d18]/35 blur-[12px]"
-            style={{ willChange: 'transform, opacity' }}
+            aria-hidden
+            animate={canAnimate ? { opacity: [0.2, 0.32, 0.2], scaleX: [0.98, 1.04, 0.98] } : undefined}
+            transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute -bottom-2 left-1/2 h-10 w-[76%] -translate-x-1/2 rounded-full bg-[#0e2a19]/48 blur-2xl"
           />
-          <motion.div
-            animate={lowPerformanceMode ? undefined : { scaleX: [1, 0.8, 1], opacity: [0.28, 0.08, 0.28] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
-            className="absolute bottom-[2px] w-[42%] h-4 rounded-full bg-[#1a3d18]/20"
-            style={{ willChange: 'transform, opacity' }}
-          />
-        </div>
 
-        <motion.div
-          animate={lowPerformanceMode ? undefined : { y: [0, -16, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
-          className="w-full h-full"
-          style={{ willChange: 'transform' }}
-        >
-          <Image
-            src="/welcome-section.png"
-            alt="Daily Synbiotic"
-            fill
-            priority
-            className="object-contain object-center"
-          />
-        </motion.div>
+          <motion.div
+            animate={canAnimate ? { y: [0, -7, 0] } : undefined}
+            transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative h-full w-full"
+            style={{ willChange: canAnimate ? 'transform' : 'auto' }}
+          >
+            <Image
+              src={threeBottlesImage}
+              alt="Daily Synbiotic"
+              fill
+              priority
+              className="object-contain object-center drop-shadow-[0_30px_50px_rgba(10,28,18,0.26)]"
+              sizes="(min-width: 1280px) 36vw, (min-width: 1024px) 40vw, 100vw"
+            />
+          </motion.div>
+        </div>
       </motion.div>
     </section>
   )

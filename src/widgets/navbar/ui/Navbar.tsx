@@ -10,6 +10,7 @@ import { scrollTo } from '@/shared/lib/scroll'
 import { useLang } from '@/shared/lib/i18n'
 import { useCart } from '@/shared/lib/cart'
 import type { Lang } from '@/shared/config/translations'
+import logoImage from '../../../../assets/imglogo.png'
 
 const LANGS: { code: Lang; label: string }[] = [
   { code: 'ru', label: 'RU' },
@@ -17,9 +18,14 @@ const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'EN' },
 ]
 
+const BRAND = {
+  name: 'NUMA Nutrition',
+  logoSrc: logoImage,
+}
+
 const NUMA_FAMILY = [
   {
-    name:   'Numa Nutrition',
+    name:   'NUMA Nutrition',
     active: true,
     href:   '/',
     icon:   (
@@ -129,11 +135,11 @@ export default function Navbar() {
 
           {/* Logo + dropdown */}
           <div className="relative" onMouseEnter={openLogo} onMouseLeave={closeLogo}>
-            <Link href="/" aria-label="NUMA Nutrition" className="group block">
+            <Link href="/" aria-label={BRAND.name} className="group block">
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                 <Image
-                  src="/numa-nutrition-logo.png"
-                  alt="NUMA Nutrition"
+                  src={BRAND.logoSrc}
+                  alt={BRAND.name}
                   width={220} height={64} priority
                   className="h-9 sm:h-10 w-auto transition-transform duration-300 group-hover:scale-[1.015]"
                 />
@@ -153,7 +159,7 @@ export default function Navbar() {
                              border border-gray-100 overflow-hidden z-50 py-2"
                 >
                   <p className="px-5 pt-2 pb-2 text-[0.6rem] font-black tracking-[0.18em] text-gray-400 uppercase">
-                    Numa Family
+                    NUMA Family
                   </p>
                   {NUMA_FAMILY.map(item => (
                     <Link
@@ -161,18 +167,18 @@ export default function Navbar() {
                       href={item.href}
                       className={`flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-colors duration-150 ${
                         item.active
-                          ? 'bg-[#e6f4ee]'
+                          ? 'bg-[#e4f5f3]'
                           : 'hover:bg-gray-50'
                       }`}
                     >
                       <span className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
                         item.active
-                          ? 'bg-[#c2e0ce] text-[#1a6b3f]'
+                          ? 'bg-[#c6e9e6] text-[#0f8e89]'
                           : 'bg-gray-100 text-gray-500'
                       }`}>
                         {item.icon}
                       </span>
-                      <span className={`text-sm font-medium ${item.active ? 'text-[#1a6b3f]' : 'text-gray-800'}`}>
+                      <span className={`text-sm font-medium ${item.active ? 'text-[#0f8e89]' : 'text-gray-800'}`}>
                         {item.name}
                       </span>
                     </Link>

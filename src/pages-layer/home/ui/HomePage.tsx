@@ -3,7 +3,8 @@ import { Hero }      from '@/widgets/hero'
 import { Products }  from '@/widgets/products'
 import { Stories }   from '@/widgets/stories'
 import { Science }   from '@/widgets/science'
-import { Bundle }    from '@/widgets/bundle'
+import { More }      from '@/widgets/more'
+import { Transformations } from '@/widgets/transformations'
 import { BlogTeaser } from '@/widgets/blog-teaser'
 import { Footer }    from '@/widgets/footer'
 
@@ -13,9 +14,10 @@ export default function HomePage() {
       <Navbar />
       <Hero />
       <Products />
-      <Stories />
       <Science />
-      <Bundle />
+      <Stories />
+      <More />
+      <Transformations />
       <BlogTeaser />
       <Footer />
     </main>
