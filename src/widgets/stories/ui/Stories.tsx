@@ -7,6 +7,13 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLang } from '@/shared/lib/i18n'
 
+import img1 from '../../../../assets/img1.png'
+import img2 from '../../../../assets/img2.png'
+import img3 from '../../../../assets/img3.png'
+import img4 from '../../../../assets/img4.png'
+import img5 from '../../../../assets/img5.png'
+import img6 from '../../../../assets/img6.png'
+
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
@@ -15,7 +22,7 @@ if (typeof window !== 'undefined') {
 const CARDS = [
   {
     type:   'photo',
-    src:    '/products/small-1.png',
+    src:    img1,
     shape:  'rounded-[2.2rem]',
     width:  232,
     height: 320,
@@ -23,7 +30,7 @@ const CARDS = [
   },
   {
     type:   'photo',
-    src:    '/products/product-1.png',
+    src:    img2,
     shape:  'rounded-[2.2rem]',
     width:  270,
     height: 360,
@@ -31,7 +38,7 @@ const CARDS = [
   },
   {
     type:   'video',
-    src:    '/products/big.png',
+    src:    img3,
     shape:  'rounded-[2.2rem]',
     width:  260,
     height: 360,
@@ -39,7 +46,7 @@ const CARDS = [
   },
   {
     type:   'oval',
-    src:    '/products/small-2.png',
+    src:    img4,
     shape:  'rounded-full',
     width:  270,
     height: 320,
@@ -47,7 +54,7 @@ const CARDS = [
   },
   {
     type:   'photo',
-    src:    '/products/product-2.png',
+    src:    img5,
     shape:  'rounded-[2.2rem]',
     width:  250,
     height: 320,
@@ -55,7 +62,7 @@ const CARDS = [
   },
   {
     type:   'photo',
-    src:    '/products/small-3.png',
+    src:    img6,
     shape:  'rounded-[2.2rem]',
     width:  230,
     height: 360,
