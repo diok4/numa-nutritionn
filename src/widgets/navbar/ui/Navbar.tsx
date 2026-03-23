@@ -23,76 +23,20 @@ const BRAND = {
   logoSrc: logoImage,
 }
 
-const NUMA_FAMILY = [
-  {
-    name:   'NUMA Nutrition',
-    active: true,
-    href:   '/',
-    icon:   (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth={1.8}>
-        <path strokeLinecap="round" strokeLinejoin="round"
-          d="M12 2C8.5 2 5 5.5 5 9.5c0 5 7 12.5 7 12.5s7-7.5 7-12.5C19 5.5 15.5 2 12 2z" />
-        <circle cx="12" cy="10" r="2.5" />
-      </svg>
-    ),
-  },
-  {
-    name:   'Numa Kids',
-    active: false,
-    href:   '#',
-    icon:   (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth={1.8}>
-        <circle cx="12" cy="7" r="3.5" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5 21c0-3.5 3-6 7-6s7 2.5 7 6" />
-        <path strokeLinecap="round" d="M9 7c0 0-1 3 3 3s3-3 3-3" />
-      </svg>
-    ),
-  },
-  {
-    name:   'Naboviy Tabobat',
-    active: false,
-    href:   '#',
-    icon:   (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth={1.8}>
-        <path strokeLinecap="round" strokeLinejoin="round"
-          d="M4.5 12.5a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3l2 2" />
-        <path strokeLinecap="round" d="M9 3.5c0 0 1.5 1.5 3 1.5s3-1.5 3-1.5" />
-      </svg>
-    ),
-  },
-  {
-    name:   'Bettery Restaurant',
-    active: false,
-    href:   '#',
-    icon:   (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth={1.8}>
-        <path strokeLinecap="round" strokeLinejoin="round"
-          d="M3 3v4a3 3 0 003 3h0a3 3 0 003-3V3M6 10v11M16 3v4c0 1.7 1.3 3 3 3v0V3M19 10v11" />
-      </svg>
-    ),
-  },
-  {
-    name:   'Bettery Ration',
-    active: false,
-    href:   '#',
-    icon:   (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth={1.8}>
-        <path strokeLinecap="round" strokeLinejoin="round"
-          d="M12 3a8 8 0 018 7H4a8 8 0 018-7z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4 10h16v2a8 8 0 01-16 0v-2z" />
-        <path strokeLinecap="round" d="M12 15v4M9 19h6" />
-      </svg>
-    ),
-  },
-]
+const BRAND_DROPDOWN_ITEMS = [
+  { label: 'NUMA Nutrition', href: '/catalog', swatch: 'linear-gradient(180deg, #008e12 0%, #00830f 100%)' },
+  { label: 'Numa Kids', href: '/catalog', swatch: 'linear-gradient(180deg, #69b812 0%, #5ea10f 100%)' },
+  { label: 'Naboviy Tabobat', href: '/catalog', swatch: 'linear-gradient(180deg, #17b700 0%, #11a200 100%)' },
+  { label: 'Bettery Restaurant', href: '/catalog', swatch: 'linear-gradient(180deg, #e7e4de 0%, #d7d5ce 100%)' },
+  { label: 'Bettery Ration', href: '/catalog', swatch: 'linear-gradient(180deg, #2f6b28 0%, #2a5f24 100%)' },
+] as const
 
 export default function Navbar() {
   const [scrolled,  setScrolled]  = useState(false)
   const [menuOpen,  setMenuOpen]  = useState(false)
   const [langOpen,  setLangOpen]  = useState(false)
-  const [logoOpen,  setLogoOpen]  = useState(false)
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [brandMenuOpen, setBrandMenuOpen] = useState(false)
+  const brandMenuCloseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { lang, setLang, t } = useLang()
   const { cartCount } = useCart()
   const pathname = usePathname()
@@ -108,6 +52,24 @@ export default function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
+  useEffect(() => {
+    return () => {
+      if (brandMenuCloseTimeout.current) clearTimeout(brandMenuCloseTimeout.current)
+    }
+  }, [])
+
+  const openBrandMenu = () => {
+    if (brandMenuCloseTimeout.current) clearTimeout(brandMenuCloseTimeout.current)
+    setBrandMenuOpen(true)
+  }
+
+  const closeBrandMenu = () => {
+    if (brandMenuCloseTimeout.current) clearTimeout(brandMenuCloseTimeout.current)
+    brandMenuCloseTimeout.current = setTimeout(() => {
+      setBrandMenuOpen(false)
+    }, 130)
+  }
+
   const handleNavClick = (href: string) => {
     setMenuOpen(false)
     if (href.startsWith('#')) {
@@ -115,9 +77,6 @@ export default function Navbar() {
       else scrollTo(href)
     }
   }
-
-  const openLogo  = () => { if (closeTimer.current) clearTimeout(closeTimer.current); setLogoOpen(true) }
-  const closeLogo = () => { closeTimer.current = setTimeout(() => setLogoOpen(false), 180) }
 
   return (
     <>
@@ -133,8 +92,17 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
 
-          {/* Logo + dropdown */}
-          <div className="relative" onMouseEnter={openLogo} onMouseLeave={closeLogo}>
+          {/* Logo */}
+          <div
+            className="relative"
+            onMouseEnter={openBrandMenu}
+            onMouseLeave={closeBrandMenu}
+            onFocusCapture={openBrandMenu}
+            onBlurCapture={(event) => {
+              const next = event.relatedTarget as Node | null
+              if (!event.currentTarget.contains(next)) closeBrandMenu()
+            }}
+          >
             <Link href="/" aria-label={BRAND.name} className="group block">
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                 <Image
@@ -145,45 +113,61 @@ export default function Navbar() {
                 />
               </motion.div>
             </Link>
-
             <AnimatePresence>
-              {logoOpen && (
+              {brandMenuOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0,   scale: 1    }}
-                  exit={{   opacity: 0, y: -10, scale: 0.96  }}
-                  transition={{ duration: 0.18 }}
-                  onMouseEnter={openLogo}
-                  onMouseLeave={closeLogo}
-                  className="absolute top-full left-0 mt-3 w-72 bg-white rounded-2xl shadow-2xl
-                             border border-gray-100 overflow-hidden z-50 py-2"
+                  initial={{ opacity: 0, y: -10, scale: 0.985 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.985 }}
+                  transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute left-0 top-[calc(100%+0.6rem)] z-[70] hidden md:block w-[400px] max-w-[calc(100vw-1rem)]"
                 >
-                  <p className="px-5 pt-2 pb-2 text-[0.6rem] font-black tracking-[0.18em] text-gray-400 uppercase">
-                    NUMA Family
-                  </p>
-                  {NUMA_FAMILY.map(item => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={`flex items-center gap-3 mx-2 px-3 py-2.5 rounded-xl transition-colors duration-150 ${
-                        item.active
-                          ? 'bg-[#e4f5f3]'
-                          : 'hover:bg-gray-50'
-                      }`}
-                    >
-                      <span className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                        item.active
-                          ? 'bg-[#c6e9e6] text-[#0f8e89]'
-                          : 'bg-gray-100 text-gray-500'
-                      }`}>
-                        {item.icon}
-                      </span>
-                      <span className={`text-sm font-medium ${item.active ? 'text-[#0f8e89]' : 'text-gray-800'}`}>
-                        {item.name}
-                      </span>
-                    </Link>
-                  ))}
-                  <div className="h-2" />
+                  <div
+                    className="relative h-[500px] overflow-hidden rounded-[2.35rem] border border-white/28 p-4 shadow-[0_22px_60px_rgba(7,20,12,0.5)] backdrop-blur-[8px]"
+                    style={{
+                      background:
+                        'radial-gradient(110% 88% at 24% 20%, rgba(114, 132, 123, 0.45) 0%, rgba(22, 66, 42, 0.28) 38%, rgba(8, 52, 26, 0.74) 100%), linear-gradient(132deg, rgba(12, 56, 31, 0.94) 0%, rgba(9, 74, 30, 0.9) 44%, rgba(6, 53, 24, 0.94) 100%)',
+                    }}
+                  >
+                    <div
+                      className="pointer-events-none absolute inset-0 opacity-45"
+                      style={{
+                        background:
+                          'linear-gradient(106deg, transparent 0%, rgba(145, 184, 163, 0.22) 15%, transparent 29%, rgba(145, 184, 163, 0.17) 43%, transparent 57%, rgba(145, 184, 163, 0.17) 72%, transparent 100%)',
+                      }}
+                    />
+                    <div className="relative h-full flex flex-col">
+                      <div className="space-y-2">
+                        {BRAND_DROPDOWN_ITEMS.map(item => (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            onClick={() => setBrandMenuOpen(false)}
+                            className="group/item flex items-center gap-4 rounded-[1.2rem] px-2 py-1 transition-colors hover:bg-white/5"
+                          >
+                            <span className="grid h-[64px] w-[64px] place-items-center rounded-[1.2rem] border border-white/26 bg-white/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.26)]">
+                              <span
+                                className="h-[40px] w-[40px] rounded-[0.7rem] shadow-[0_10px_18px_rgba(0,0,0,0.22)]"
+                                style={{ background: item.swatch }}
+                              />
+                            </span>
+                            <span className="text-[1.45rem] font-semibold leading-[1.05] tracking-[-0.02em] text-white/95 group-hover/item:text-white">
+                              {item.label}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="mt-auto border-t border-[#3e6b48]/80 pt-4 flex justify-end">
+                        <Link
+                          href="/catalog"
+                          onClick={() => setBrandMenuOpen(false)}
+                          className="text-[1.55rem] font-semibold leading-none text-white/85 hover:text-white border-b border-white/55 hover:border-white transition-colors pb-1"
+                        >
+                          Shop All Products →
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>

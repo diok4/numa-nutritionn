@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/shared/lib/i18n'
 import { useCart, type CartProduct } from '@/shared/lib/cart'
 import { Navbar } from '@/widgets/navbar'
+import img6 from '../../../../assets/img6.png'
+import img13 from '../../../../assets/img13.png'
 
 type Category = 'all' | 'gut' | 'vitamins' | 'energy' | 'sleep' | 'immunity'
 
@@ -209,7 +211,7 @@ export default function CatalogPage() {
   const filtered = category === 'all' ? PRODUCTS : PRODUCTS.filter(product => product.category === category)
   const getName = (product: Product) => (lang === 'ru' ? product.nameRu : lang === 'uz' ? product.nameUz : product.nameEn)
   const getDesc = (product: Product) => (lang === 'ru' ? product.descRu : lang === 'uz' ? product.descUz : product.descEn)
-  const getProductImage = (id: number) => (id % 2 === 0 ? '/products/product-2.png' : '/products/product-1.png')
+  const getProductImage = (id: number) => (id % 2 === 0 ? img6 : img13)
   const getQtyInCart = (id: number) => cart.find(item => item.product.id === id)?.qty ?? 0
   const addedLabel = lang === 'ru' ? 'Добавлено' : lang === 'uz' ? 'Qo‘shildi' : 'Added'
 

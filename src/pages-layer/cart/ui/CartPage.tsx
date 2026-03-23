@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { Navbar } from '@/widgets/navbar'
 import { useLang } from '@/shared/lib/i18n'
 import { useCart } from '@/shared/lib/cart'
+import img6 from '../../../../assets/img6.png'
+import img13 from '../../../../assets/img13.png'
 
 function formatPrice(price: number, lang: string) {
   return price.toLocaleString('ru-RU') + ' ' + (lang === 'en' ? 'UZS' : lang === 'uz' ? 'so\'m' : 'сум')
@@ -69,7 +71,7 @@ export default function CartPage() {
                         className="w-14 h-14 rounded-xl flex-shrink-0 bg-[#f5f2ec] flex items-center justify-center"
                       >
                         <Image
-                          src={product.id % 2 === 0 ? '/products/product-2.png' : '/products/product-1.png'}
+                          src={product.id % 2 === 0 ? img6 : img13}
                           alt="" width={40} height={56}
                           className="h-12 w-auto object-contain"
                         />

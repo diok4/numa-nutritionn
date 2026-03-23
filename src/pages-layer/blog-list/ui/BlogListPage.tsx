@@ -7,9 +7,28 @@ import { motion } from 'framer-motion'
 import { useLang } from '@/shared/lib/i18n'
 import { BLOG_POSTS } from '@/shared/config/blog-posts'
 import { Navbar } from '@/widgets/navbar'
+import img1 from '../../../../assets/img1.png'
+import img2 from '../../../../assets/img2.png'
+import img3 from '../../../../assets/img3.png'
+import img4 from '../../../../assets/img4.png'
+import img5 from '../../../../assets/img5.png'
+import img6 from '../../../../assets/img6.png'
+import img7 from '../../../../assets/img7.png'
+import img8 from '../../../../assets/img8.png'
 
 const CATEGORIES = ['Все / All', 'Наука', 'Витамины', 'Здоровье', 'Сон', 'Красота', 'Энергия', 'Советы']
-const getBlogImage = (slug: string) => `/blog/${slug}.svg`
+const BLOG_IMAGES = {
+  'gut-brain-axis': img1,
+  'vitamin-d-deficiency': img2,
+  'probiotics-vs-prebiotics': img3,
+  'omega-3-heart-health': img4,
+  'magnesium-stress-sleep': img5,
+  'collagen-after-30': img6,
+  'how-to-take-vitamins': img7,
+  'ashwagandha-adaptogen': img8,
+} as const
+
+const getBlogImage = (slug: string) => BLOG_IMAGES[slug as keyof typeof BLOG_IMAGES] ?? img4
 
 export default function BlogListPage() {
   const { lang, t } = useLang()

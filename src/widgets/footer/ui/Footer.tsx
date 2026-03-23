@@ -74,34 +74,34 @@ export default function Footer() {
               className="w-[132px] sm:w-[156px] lg:w-[188px] h-auto"
             />
 
-            <h2 className="mt-4 sm:mt-5 max-w-[820px] text-[1.45rem] sm:text-[1.95rem] lg:text-[2.55rem] leading-[1.17] font-light tracking-[-0.01em]">
+            <h2 className="mt-4 sm:mt-5 max-w-[820px] text-[1.25rem] sm:text-[1.6rem] lg:text-[2.1rem] leading-[1.17] font-light tracking-[-0.01em]">
               {slogan}
             </h2>
 
-            <div className="mt-5 sm:mt-6 text-[1.06rem] sm:text-[1.15rem] lg:text-[1.28rem] leading-[1.48] text-[#1f8b85]/88 font-light">
+            <div className="mt-5 sm:mt-6 text-[0.95rem] sm:text-[1rem] lg:text-[1.1rem] leading-[1.48] text-[#1f8b85]/88 font-light">
               <p>{contactsLabel}</p>
               <p>{emailLabel}: info@numanutrition.com</p>
               <p>{phoneLabel}: +998 90 123 45 67</p>
               <p>{addressLabel}: Ташкент, Uzbekistan</p>
             </div>
 
-            <p className="mt-2.5 text-[0.9rem] sm:text-[0.98rem] lg:text-[1.08rem] text-[#1f8b85]/45 leading-[1.35] font-light">
+            <p className="mt-2.5 text-[0.8rem] sm:text-[0.85rem] lg:text-[0.94rem] text-[#1f8b85]/45 leading-[1.35] font-light">
               {disclaimer}
             </p>
 
             <form onSubmit={handleSubscribe} className="mt-2.5 max-w-[560px]">
               {!subscribed ? (
                 <div className="relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    placeholder={inputPlaceholder}
-                    required
-                    className="w-full rounded-[0.75rem] border-2 border-[#1f8b85] bg-transparent
-                               py-2 pl-4.5 pr-14 text-[1.1rem] sm:text-[1.18rem] lg:text-[1.32rem] text-[#1f8b85]
-                               placeholder:text-[#1f8b85]/78 font-light focus:outline-none"
-                  />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      placeholder={inputPlaceholder}
+                      required
+                      className="w-full rounded-[0.75rem] border-2 border-[#1f8b85] bg-transparent
+                                 py-2 pl-4.5 pr-14 text-[0.95rem] sm:text-[1rem] lg:text-[1.1rem] text-[#1f8b85]
+                                 placeholder:text-[#1f8b85]/78 font-light focus:outline-none"
+                    />
                   <button
                     type="submit"
                     aria-label="Subscribe"
@@ -116,7 +116,7 @@ export default function Footer() {
               )}
             </form>
 
-            <p className="mt-2.5 text-[1.06rem] sm:text-[1.14rem] lg:text-[1.24rem] text-[#1f8b85] font-light">
+            <p className="mt-2.5 text-[0.92rem] sm:text-[0.98rem] lg:text-[1.05rem] text-[#1f8b85] font-light">
               {copy}
             </p>
           </motion.div>
@@ -127,7 +127,7 @@ export default function Footer() {
             transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
             className="lg:justify-self-center"
           >
-            <p className="text-[0.86rem] sm:text-[0.92rem] lg:text-[0.98rem] font-semibold text-[#1f8b85]/55 uppercase tracking-[0.02em]">
+            <p className="text-[0.75rem] sm:text-[0.8rem] lg:text-[0.85rem] font-semibold text-[#1f8b85]/55 uppercase tracking-[0.02em]">
               {menuTitle}
             </p>
             <ul className="mt-3 space-y-2.5 sm:space-y-3">
@@ -135,7 +135,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[1.02rem] sm:text-[1.1rem] lg:text-[1.2rem] text-[#1f8b85]/86 font-light hover:text-[#1f8b85] transition-colors"
+                    className="text-[0.9rem] sm:text-[0.95rem] lg:text-[1.05rem] text-[#1f8b85]/86 font-light hover:text-[#1f8b85] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -150,7 +150,7 @@ export default function Footer() {
             transition={{ duration: 0.8, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
             className="lg:justify-self-center"
           >
-            <p className="text-[0.86rem] sm:text-[0.92rem] lg:text-[0.98rem] font-semibold text-[#1f8b85]/55 uppercase tracking-[0.02em]">
+            <p className="text-[0.75rem] sm:text-[0.8rem] lg:text-[0.85rem] font-semibold text-[#1f8b85]/55 uppercase tracking-[0.02em]">
               {socialsTitle}
             </p>
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2.5 lg:flex-col lg:gap-y-3">
@@ -158,7 +158,7 @@ export default function Footer() {
                 <a
                   key={item}
                   href="#"
-                  className="text-[1.02rem] sm:text-[1.1rem] lg:text-[1.2rem] text-[#1f8b85]/86 font-light hover:text-[#1f8b85] transition-colors"
+                  className="text-[0.9rem] sm:text-[0.95rem] lg:text-[1.05rem] text-[#1f8b85]/86 font-light hover:text-[#1f8b85] transition-colors"
                 >
                   {item}
                 </a>
